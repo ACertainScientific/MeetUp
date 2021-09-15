@@ -1,17 +1,17 @@
 /*
- Navicat MySQL Data Transfer
+ Navicat Premium Data Transfer
 
- Source Server         : local
+ Source Server         : test_connection
  Source Server Type    : MySQL
- Source Server Version : 80024
+ Source Server Version : 80021
  Source Host           : localhost:3306
  Source Schema         : meetup
 
  Target Server Type    : MySQL
- Target Server Version : 80024
+ Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 15/09/2021 16:04:05
+ Date: 15/09/2021 16:17:56
 */
 
 SET NAMES utf8mb4;
@@ -31,7 +31,7 @@ CREATE TABLE `appointment`  (
   `year` int NOT NULL,
   `date` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for building
@@ -46,7 +46,7 @@ CREATE TABLE `building`  (
   `updated_at` int(10) UNSIGNED ZEROFILL NOT NULL,
   `deleted_at` int(10) UNSIGNED ZEROFILL NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for room
@@ -60,6 +60,17 @@ CREATE TABLE `room`  (
   `created_at` int(10) UNSIGNED ZEROFILL NOT NULL,
   `updated_at` int(10) UNSIGNED ZEROFILL NOT NULL,
   `deleted_at` int NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
