@@ -14,6 +14,7 @@ public class RoomService extends ServiceImpl<RoomMapper, RoomModel> implements I
     RoomMapper roomMapper;
 
 
+
     @Override
     public RoomModel searchById(int id){
         return roomMapper.selectById(id);
