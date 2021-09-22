@@ -8,5 +8,5 @@ import org.springframework.stereotype.Component;
 @Component
 public interface BuildingMapper extends BaseMapper<BuildingModel> {
 
-    BuildingModel addBuilding(BuildingAddDto buildingAddDto);
+//    void addBuilding(BuildingAddDto buildingAddDto);
 }

@@ -5,12 +5,14 @@ import com.acertainscientific.meetup.mapper.BuildingMapper;
 import com.acertainscientific.meetup.model.BuildingModel;
 import com.acertainscientific.meetup.service.IBuildingService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@Slf4j
 public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> implements IBuildingService {
 
     @Autowired
@@ -18,7 +20,23 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
     @Autowired
     private ModelMapper modelMapper;
     @Override
-    public BuildingModel addBuilding(BuildingAddDto buildingAddDto){
-        return buildingMapper.addBuilding(buildingAddDto);
+    public void addBuilding(BuildingAddDto buildingAddDto){
+        BuildingModel buildingModel = modelMapper.map(buildingAddDto, BuildingModel.class);
+        buildingModel.setCreated_at((int)(System.currentTimeMillis()/1000));
+        this.save(buildingModel);
+    }
+
+    @Override
+    public boolean deleteBuilding(Integer id){
+        BuildingModel buildingModel = this.getById(id);
+        if (buildingModel != null){
+            buildingModel.setIs_deleted(1);
+            buildingModel.setDeleted_at((int)(System.currentTimeMillis()/1000));
+            this.updateById(buildingModel);
+            return true;
+        }
+
+        return false;
+
     }
 }

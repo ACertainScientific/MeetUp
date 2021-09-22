@@ -7,5 +7,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 public interface IBuildingService extends IService<BuildingModel> {
 
-    BuildingModel addBuilding(BuildingAddDto buildingAddDto);
+    /**
+     * add a building to our database
+     * @param buildingAddDto the building information
+     * @return
+     */
+    void addBuilding(BuildingAddDto buildingAddDto);
+
+    boolean deleteBuilding(Integer id);
 }
