@@ -1,6 +1,7 @@
 package com.acertainscientific.meetup.controller;
 
 
+import com.acertainscientific.meetup.common.AjaxResult;
 import com.acertainscientific.meetup.dto.BuildingAddDto;
 import com.acertainscientific.meetup.model.BuildingModel;
 import com.acertainscientific.meetup.service.IBuildingService;
@@ -15,16 +16,16 @@ public class BuildingController {
     IBuildingService buildingService;
 
     @PostMapping("/add_building")
-    public boolean addBuilding(@RequestBody BuildingAddDto buildingAddDto){
+    public AjaxResult addBuilding(@RequestBody BuildingAddDto buildingAddDto){
         buildingService.addBuilding(buildingAddDto);
-        return true;
+        return AjaxResult.success();
     }
 
     @DeleteMapping("/add_delete_mapping")
-    public boolean deleteBuilding(@RequestParam Integer id){
+    public AjaxResult deleteBuilding(@RequestParam Integer id){
         if (buildingService.deleteBuilding(id)){
-            return true;
+            return AjaxResult.success();
         }
-        return false;
+        return AjaxResult.error();
     }
 }

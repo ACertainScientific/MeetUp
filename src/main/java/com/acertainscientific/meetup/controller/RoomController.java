@@ -1,5 +1,6 @@
 package com.acertainscientific.meetup.controller;
 
+import com.acertainscientific.meetup.common.AjaxResult;
 import com.acertainscientific.meetup.model.RoomModel;
 import com.acertainscientific.meetup.service.IRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ public class RoomController {
     IRoomService roomService;
 
     @GetMapping("/search/{id}")
-    public RoomModel searchById(@PathVariable Integer id){
-        return roomService.searchById(id);
+    public AjaxResult searchById(@PathVariable Integer id){
+        return AjaxResult.success(roomService.searchById(id));
     }
 }

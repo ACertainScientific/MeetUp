@@ -1,5 +1,6 @@
 package com.acertainscientific.meetup.controller;
 
+import com.acertainscientific.meetup.common.AjaxResult;
 import com.acertainscientific.meetup.dto.AppointmentAddDto;
 import com.acertainscientific.meetup.service.IAppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +13,20 @@ public class AppointmentController {
     IAppointmentService iAppointmentService;
 
     @PostMapping("/add_appointment")
-    public boolean addAppointment(@RequestBody AppointmentAddDto appointmentAddDto){
-        return iAppointmentService.addAppointmentService(appointmentAddDto);
+    public AjaxResult addAppointment(@RequestBody AppointmentAddDto appointmentAddDto){
+        if(iAppointmentService.addAppointmentService(appointmentAddDto)){
+            return AjaxResult.success();
+        }else{
+            return AjaxResult.error();
+        }
     }
 
     @DeleteMapping("/delete_appointment")
-    public boolean deleteAppointment(@RequestParam Integer id){
-        return iAppointmentService.deleteAppointmentService(id);
+    public AjaxResult deleteAppointment(@RequestParam Integer id){
+        if( iAppointmentService.deleteAppointmentService(id)){
+            return AjaxResult.success();
+        }else{
+            return AjaxResult.error();
+        }
     }
 }
