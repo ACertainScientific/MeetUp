@@ -1,6 +1,7 @@
 package com.acertainscientific.meetup.service.impl;
 
 import com.acertainscientific.meetup.dto.BuildingAddDto;
+import com.acertainscientific.meetup.dto.BuildingUpdateDto;
 import com.acertainscientific.meetup.mapper.BuildingMapper;
 import com.acertainscientific.meetup.model.BuildingModel;
 import com.acertainscientific.meetup.service.IBuildingService;
@@ -38,5 +39,16 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
 
         return false;
 
+    }
+
+    @Override
+    public boolean updateBuilding(BuildingUpdateDto buildingUpdateDto){
+        BuildingModel buildingModel = modelMapper.map(buildingUpdateDto, BuildingModel.class);
+        if(buildingModel != null){
+            buildingModel.setUpdated_at((int)(System.currentTimeMillis()/1000));
+            this.updateById(buildingModel);
+            return true;
+        }
+        return false;
     }
 }

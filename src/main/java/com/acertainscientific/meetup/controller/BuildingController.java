@@ -3,6 +3,7 @@ package com.acertainscientific.meetup.controller;
 
 import com.acertainscientific.meetup.common.AjaxResult;
 import com.acertainscientific.meetup.dto.BuildingAddDto;
+import com.acertainscientific.meetup.dto.BuildingUpdateDto;
 import com.acertainscientific.meetup.model.BuildingModel;
 import com.acertainscientific.meetup.service.IBuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,12 @@ public class BuildingController {
             return AjaxResult.success();
         }
         return AjaxResult.error();
+    }
+    @PostMapping("/update_building")
+    public boolean updateBuilding(@RequestBody BuildingUpdateDto buildingUpdateDto){
+        if(buildingService.updateBuilding(buildingUpdateDto)){
+            return true;
+        }
+        return false;
     }
 }

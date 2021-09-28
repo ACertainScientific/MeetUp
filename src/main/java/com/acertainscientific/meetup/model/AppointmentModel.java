@@ -25,4 +25,6 @@ public class AppointmentModel {
     private Integer year;
 
     private Integer date;
+
+    private Integer is_delete;
 }
