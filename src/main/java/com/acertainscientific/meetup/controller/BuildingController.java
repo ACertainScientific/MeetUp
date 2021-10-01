@@ -41,7 +41,7 @@ public class BuildingController {
     public AjaxResult listBuilding(@RequestParam(value = "page") Integer page,
                                    @RequestParam(value = "page_size") Integer pageSize,
                                    @RequestParam(value = "name") String name){
-        return AjaxResult.success(AjaxResult.success(buildingService.listBuilding(page,pageSize,name)));
+        return AjaxResult.success(buildingService.listBuilding(page,pageSize,name));
     }
 
 }
