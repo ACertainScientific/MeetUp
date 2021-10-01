@@ -23,7 +23,7 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
     @Override
     public void addBuilding(BuildingAddDto buildingAddDto){
         BuildingModel buildingModel = modelMapper.map(buildingAddDto, BuildingModel.class);
-        buildingModel.setCreated_at((int)(System.currentTimeMillis()/1000));
+        buildingModel.setCreatedAt((int)(System.currentTimeMillis()/1000));
         this.save(buildingModel);
     }
 
@@ -31,8 +31,8 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
     public boolean deleteBuilding(Integer id){
         BuildingModel buildingModel = this.getById(id);
         if (buildingModel != null){
-            buildingModel.setIs_deleted(1);
-            buildingModel.setDeleted_at((int)(System.currentTimeMillis()/1000));
+            buildingModel.setIsDeleted(1);
+            buildingModel.setDeletedAt((int)(System.currentTimeMillis()/1000));
             this.updateById(buildingModel);
             return true;
         }
@@ -45,7 +45,7 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
     public boolean updateBuilding(BuildingUpdateDto buildingUpdateDto){
         BuildingModel buildingModel = modelMapper.map(buildingUpdateDto, BuildingModel.class);
         if(buildingModel != null){
-            buildingModel.setUpdated_at((int)(System.currentTimeMillis()/1000));
+            buildingModel.setUpdatedAt((int)(System.currentTimeMillis()/1000));
             this.updateById(buildingModel);
             return true;
         }

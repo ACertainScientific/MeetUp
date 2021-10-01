@@ -9,9 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BuildingAddDto {
-
-
     private String name;
-    private int floor_start;
-    private int floor_end;
+    private int floorStart;
 }

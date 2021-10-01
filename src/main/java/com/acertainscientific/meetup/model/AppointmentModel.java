@@ -12,13 +12,13 @@ public class AppointmentModel {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    private Integer room_id;
+    private Integer roomId;
 
-    private Integer start_time;
+    private Integer startTime;
 
-    private Integer end_time;
+    private Integer endTime;
 
-    private String user_id;
+    private String userId;
 
     private Integer month;
 
@@ -26,5 +26,5 @@ public class AppointmentModel {
 
     private Integer date;
 
-    private Integer is_delete;
+    private Integer isDelete;
 }

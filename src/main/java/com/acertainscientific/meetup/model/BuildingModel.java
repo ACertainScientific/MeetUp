@@ -27,31 +27,31 @@ public class BuildingModel {
      *
      * e.g 1
      */
-    private Integer floor_start;
+    private Integer floorStart;
 
     /**
      *
      * e.g 3, 4
      */
-    private Integer floor_end;
+    private Integer floorEnd;
 
     /**
      * created_at
      */
-    private Integer created_at;
+    private Integer createdAt;
 
     /**
      * updated_at
      */
-    private Integer updated_at;
+    private Integer updatedAt;
 
     /**
      * deleted_at
      */
-    private Integer deleted_at;
+    private Integer deletedAt;
 
     /**
      * is_deleted
      */
-    private Integer is_deleted;
+    private Integer isDeleted;
 }

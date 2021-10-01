@@ -22,7 +22,7 @@ public class BuildingController {
         return AjaxResult.success();
     }
 
-    @DeleteMapping("/add_delete_mapping")
+    @DeleteMapping("/delete_building")
     public AjaxResult deleteBuilding(@RequestParam Integer id){
         if (buildingService.deleteBuilding(id)){
             return AjaxResult.success();
@@ -30,10 +30,10 @@ public class BuildingController {
         return AjaxResult.error();
     }
     @PostMapping("/update_building")
-    public boolean updateBuilding(@RequestBody BuildingUpdateDto buildingUpdateDto){
+    public AjaxResult updateBuilding(@RequestBody BuildingUpdateDto buildingUpdateDto){
         if(buildingService.updateBuilding(buildingUpdateDto)){
-            return true;
+            return AjaxResult.success();
         }
-        return false;
+        return AjaxResult.error();
     }
 }

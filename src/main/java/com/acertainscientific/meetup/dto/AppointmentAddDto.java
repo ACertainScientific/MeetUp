@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppointmentAddDto {
-    private Integer room_id;
-    private Integer start_time;
-    private Integer end_time;
-    private String user_id;
+    private Integer roomId;
+    private Integer startTime;
+    private Integer endTime;
+    private String userId;
     private Integer month;
     private Integer year;
     private Integer date;

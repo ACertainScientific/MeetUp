@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class BuildingUpdateDto {
     private int id;
     private String name;
-    private int floor_start;
-    private int floor_end;
+    private int floorStart;
+    private int floorEnd;
 }

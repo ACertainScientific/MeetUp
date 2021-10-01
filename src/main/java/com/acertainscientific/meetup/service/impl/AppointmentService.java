@@ -30,7 +30,7 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
     public boolean deleteAppointmentService(Integer id){
         AppointmentModel appointmentModel = this.getById(id);
         if (appointmentModel != null){
-            appointmentModel.setIs_delete(1);
+            appointmentModel.setIsDelete(1);
             return true;
         }
         return false;
