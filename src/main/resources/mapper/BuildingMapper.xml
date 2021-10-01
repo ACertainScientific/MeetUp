@@ -4,4 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.acertainscientific.meetup.mapper.BuildingMapper">
 
+    <resultMap id="baseResultMap" type="com.acertainscientific.meetup.model.BuildingModel">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="floor_start" jdbcType="INTEGER" property="floorStart"/>
+        <result column="floor_end" jdbcType="INTEGER" property="floorEnd"/>
+        <result column="updated_at" jdbcType="INTEGER" property="updatedAt"/>
+        <result column="deleted_at" jdbcType="INTEGER" property="deletedAt"/>
+        <result column="is_deleted" jdbcType="INTEGER" property="isDeleted"/>
+    </resultMap>
+
+    <select id="listBuilding" resultType="com.acertainscientific.meetup.model.BuildingModel" resultMap="baseResultMap">
+        SELECT * FROM building
+        WHERE
+        is_deleted=0 AND
+        name LIKE CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+    </select>
 </mapper>

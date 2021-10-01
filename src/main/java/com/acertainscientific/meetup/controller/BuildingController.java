@@ -36,4 +36,12 @@ public class BuildingController {
         }
         return AjaxResult.error();
     }
+
+    @GetMapping("/list_building")
+    public AjaxResult listBuilding(@RequestParam(value = "page") Integer page,
+                                   @RequestParam(value = "page_size") Integer pageSize,
+                                   @RequestParam(value = "name") String name){
+        return AjaxResult.success(buildingService.listBuilding(page,pageSize,name));
+    }
+
 }

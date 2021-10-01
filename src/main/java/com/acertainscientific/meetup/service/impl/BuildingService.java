@@ -1,15 +1,22 @@
 package com.acertainscientific.meetup.service.impl;
 
 import com.acertainscientific.meetup.dto.BuildingAddDto;
+import com.acertainscientific.meetup.dto.BuildingListDto;
 import com.acertainscientific.meetup.dto.BuildingUpdateDto;
+import com.acertainscientific.meetup.dto.PageResponseDto;
 import com.acertainscientific.meetup.mapper.BuildingMapper;
 import com.acertainscientific.meetup.model.BuildingModel;
 import com.acertainscientific.meetup.service.IBuildingService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -50,5 +57,21 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
             return true;
         }
         return false;
+    }
+
+    @Override
+    public PageResponseDto listBuilding(Integer page, Integer pageSize, String name){
+        PageHelper.startPage(page,pageSize);
+        List<BuildingModel> buildingModels = buildingMapper.listBuilding(name);
+        PageInfo pageInfo =new PageInfo(buildingModels);
+        List<BuildingListDto> buildingListDtos = modelMapper.map(buildingModels,new TypeToken<List<BuildingModel>>(){}.getType());
+        PageResponseDto pageResponseDto= new PageResponseDto();
+        pageResponseDto.setList(buildingListDtos);
+        pageResponseDto.setTotalCount((int) pageInfo.getTotal());
+        pageResponseDto.setPageCount(pageInfo.getPages());
+        pageResponseDto.setPerPage(pageInfo.getPageSize());
+        pageResponseDto.setCurrentPage(pageInfo.getPageNum());
+        return pageResponseDto;
+
     }
 }
