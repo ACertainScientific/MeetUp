@@ -8,15 +8,15 @@ import shutil
 # MySQL database details to which backup to be done. Make sure below user having enough privileges to take databases backup.
 
 #数据库ip
-DB_HOST = "cdb-.tcdb.com"
+DB_HOST = "us-or-cera-2.natfrp.cloud"
 #数据库端口
-DB_PORT = "10111"
+DB_PORT = "21466"
 #数据库用户名
-DB_USER = "root"
+DB_USER = "meetup"
 #数据库密码
-DB_USER_PASSWORD = "\'(ink^zm+36Xd=&18!\'"
+DB_USER_PASSWORD = "Example12345678!"
 #备份的数据库
-DB_NAMES = "order,act,ggg"
+DB_NAMES = "meetup"
 #备份到的路径
 BACKUP_PATH = "/sqlbak/"
 
