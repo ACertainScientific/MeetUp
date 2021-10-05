@@ -1,5 +1,6 @@
 package com.acertainscientific.meetup.service.impl;
 
+import com.acertainscientific.meetup.dto.DetailRoomDto;
 import com.acertainscientific.meetup.dto.RoomAddDto;
 import com.acertainscientific.meetup.mapper.RoomMapper;
 import com.acertainscientific.meetup.model.BuildingModel;
@@ -52,4 +53,21 @@ public class RoomService extends ServiceImpl<RoomMapper, RoomModel> implements I
         }
         return false;
     }
+
+    @Override
+    public boolean roomDecision(Integer id){
+        RoomModel roomModel = this.getById(id);
+        return roomModel != null && roomModel.getIsDeleted() != 1;
+    }
+
+    @Override
+    public DetailRoomDto detailRoomDto(Integer id){
+        RoomModel roomModel = this.getById(id);
+        DetailRoomDto detailRoomDto = new DetailRoomDto();
+        detailRoomDto.setName(roomModel.getRoomName());
+        detailRoomDto.setBuildingId(roomModel.getBuildingId());
+        detailRoomDto.setFloor(roomModel.getFloor());
+        return detailRoomDto;
+    }
+
 }

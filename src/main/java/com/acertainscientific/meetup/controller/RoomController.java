@@ -1,6 +1,7 @@
 package com.acertainscientific.meetup.controller;
 
 import com.acertainscientific.meetup.common.AjaxResult;
+import com.acertainscientific.meetup.dto.DetailRoomDto;
 import com.acertainscientific.meetup.dto.RoomAddDto;
 import com.acertainscientific.meetup.model.RoomModel;
 import com.acertainscientific.meetup.service.IRoomService;
@@ -34,6 +35,14 @@ public class RoomController {
     public AjaxResult deleteRoom(@RequestParam Integer id){
         if (roomService.deleteRoom(id)){
             return AjaxResult.success();
+        }
+        return AjaxResult.error();
+    }
+
+    @GetMapping("/detail_room")
+    public AjaxResult detailBuilding(@RequestParam(value = "id") Integer id){
+        if(roomService.roomDecision(id)){
+            return AjaxResult.success(roomService.detailRoomDto(id));
         }
         return AjaxResult.error();
     }
