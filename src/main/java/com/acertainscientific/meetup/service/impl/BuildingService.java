@@ -1,9 +1,6 @@
 package com.acertainscientific.meetup.service.impl;
 
-import com.acertainscientific.meetup.dto.BuildingAddDto;
-import com.acertainscientific.meetup.dto.BuildingListDto;
-import com.acertainscientific.meetup.dto.BuildingUpdateDto;
-import com.acertainscientific.meetup.dto.PageResponseDto;
+import com.acertainscientific.meetup.dto.*;
 import com.acertainscientific.meetup.mapper.BuildingMapper;
 import com.acertainscientific.meetup.model.BuildingModel;
 import com.acertainscientific.meetup.service.IBuildingService;
@@ -74,4 +71,22 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
         return pageResponseDto;
 
     }
+
+    @Override
+    public boolean dbDecision(Integer id){
+        BuildingModel buildingModel = this.getById(id);
+        return buildingModel != null && buildingModel.getIsDeleted() != 1;
+    }
+
+    @Override
+    public DetailBuildingDto detailBuilding(Integer id){
+        BuildingModel buildingModel = this.getById(id);
+        DetailBuildingDto  detailBuildingDto = new DetailBuildingDto();
+        detailBuildingDto.setName(buildingModel.getName());
+        detailBuildingDto.setFloorStart(buildingModel.getFloorStart());
+        detailBuildingDto.setFloorEnd(buildingModel.getFloorEnd());
+        return detailBuildingDto;
+
+    }
+
 }

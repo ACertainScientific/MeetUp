@@ -43,5 +43,12 @@ public class BuildingController {
                                    @RequestParam(value = "name") String name){
         return AjaxResult.success(buildingService.listBuilding(page,pageSize,name));
     }
+    @GetMapping("/detail_building")
+    public AjaxResult detailBuilding(@RequestParam(value = "id") Integer id){
+        if (buildingService.dbDecision(id)){
+            return AjaxResult.success(buildingService.detailBuilding(id));
+        }
+        return AjaxResult.error();
+    }
 
 }
