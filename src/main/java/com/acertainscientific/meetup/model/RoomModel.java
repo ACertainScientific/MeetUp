@@ -18,7 +18,7 @@ public class RoomModel {
     /**
      * e.g. DCC308
      */
-    private String room;
+    private String roomName;
 
     /**
      *
@@ -46,4 +46,7 @@ public class RoomModel {
      * deletedAt
      */
     private Integer deletedAt;
+
+
+    private Integer isDeleted;
 }
