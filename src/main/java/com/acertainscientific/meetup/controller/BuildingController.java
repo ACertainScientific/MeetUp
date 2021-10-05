@@ -6,11 +6,16 @@ import com.acertainscientific.meetup.dto.BuildingAddDto;
 import com.acertainscientific.meetup.dto.BuildingUpdateDto;
 import com.acertainscientific.meetup.model.BuildingModel;
 import com.acertainscientific.meetup.service.IBuildingService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Api(tags = "Building")
 public class BuildingController {
 
     @Autowired
