@@ -25,8 +25,7 @@ public class MeetUpApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/*").allowedOrigins("http://localhost:8089")
-													.allowedOrigins("http://us-or-cera-2.natfrp.cloud:23553");
+				registry.addMapping("/**");
 			}
 		};
 	}
