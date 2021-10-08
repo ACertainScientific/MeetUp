@@ -1,8 +1,8 @@
 package com.acertainscientific.meetup.service;
 
 import com.acertainscientific.meetup.dto.DetailRoomDto;
+import com.acertainscientific.meetup.dto.PageResponseDto;
 import com.acertainscientific.meetup.dto.RoomAddDto;
-import com.acertainscientific.meetup.dto.RoomDto;
 import com.acertainscientific.meetup.model.RoomModel;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -19,6 +19,8 @@ public interface IRoomService extends IService<RoomModel> {
     boolean addRoom(RoomAddDto roomAddDto);
 
     boolean roomDecision(Integer id);
+
+    PageResponseDto listRoom(Integer page, Integer pageSize, Integer buildingId, Integer floor, String roomName);
 
     DetailRoomDto detailRoomDto(Integer id);
 

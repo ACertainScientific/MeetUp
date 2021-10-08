@@ -9,6 +9,7 @@
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="floor_start" jdbcType="INTEGER" property="floorStart"/>
         <result column="floor_end" jdbcType="INTEGER" property="floorEnd"/>
+        <result column="created_at" jdbcType="INTEGER" property="createdAt"/>
         <result column="updated_at" jdbcType="INTEGER" property="updatedAt"/>
         <result column="deleted_at" jdbcType="INTEGER" property="deletedAt"/>
         <result column="is_deleted" jdbcType="INTEGER" property="isDeleted"/>

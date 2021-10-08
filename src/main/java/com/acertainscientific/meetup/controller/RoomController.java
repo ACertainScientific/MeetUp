@@ -46,4 +46,13 @@ public class RoomController {
         }
         return AjaxResult.error();
     }
+
+    @GetMapping("/list_room")
+    public AjaxResult ListRoom(@RequestParam(value = "page") Integer page,
+                               @RequestParam(value = "page-size") Integer pageSize,
+                               @RequestParam(value = "building-id") Integer buildingId,
+                               @RequestParam(value = "floor") Integer floor,
+                               @RequestParam(value = "room-name") String roomName){
+        return AjaxResult.success(roomService.listRoom(page, pageSize, buildingId, floor, roomName));
+    }
 }
