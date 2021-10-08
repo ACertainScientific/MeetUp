@@ -10,9 +10,6 @@ public class HttpResponseInterceptorHandler implements HandlerInterceptor {
     // 实现HandlerInterceptor  或者 继承HandlerInterceptorAdapter都可以,如果想看着简洁就使用后者
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        response.addHeader("Access-Control-Allow-Origin","*");
-        response.addHeader("Access-Control-Allow-Method","GET");
-        response.addHeader("Access-Control-Allow-Header","*");
         return true;
     }
 
