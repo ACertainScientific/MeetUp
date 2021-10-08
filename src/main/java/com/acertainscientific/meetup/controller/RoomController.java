@@ -13,7 +13,7 @@ public class RoomController {
     @Autowired
     IRoomService roomService;
 
-    @GetMapping("/room_search/{id}")
+    @GetMapping("/room-search/{id}")
     public AjaxResult searchById(@PathVariable Integer id) {
         RoomModel roomModel = roomService.searchById(id);
         if (roomModel == null || roomModel.getIsDeleted() == 1){
@@ -23,7 +23,7 @@ public class RoomController {
         return AjaxResult.success(roomModel);
     }
 
-    @PostMapping("/add_room")
+    @PostMapping("/add-room")
     public AjaxResult addRoom(@RequestBody RoomAddDto roomAddDto){
         if (roomService.addRoom(roomAddDto)){
             return AjaxResult.success();
@@ -31,7 +31,7 @@ public class RoomController {
         return AjaxResult.error();
     }
 
-    @PostMapping("/delete_room")
+    @PostMapping("/delete-room")
     public AjaxResult deleteRoom(@RequestParam Integer id){
         if (roomService.deleteRoom(id)){
             return AjaxResult.success();
@@ -39,7 +39,7 @@ public class RoomController {
         return AjaxResult.error();
     }
 
-    @GetMapping("/detail_room")
+    @GetMapping("/detail-room")
     public AjaxResult detailBuilding(@RequestParam(value = "id") Integer id){
         if(roomService.roomDecision(id)){
             return AjaxResult.success(roomService.detailRoomDto(id));
@@ -47,7 +47,7 @@ public class RoomController {
         return AjaxResult.error();
     }
 
-    @GetMapping("/list_room")
+    @GetMapping("/list-room")
     public AjaxResult ListRoom(@RequestParam(value = "page") Integer page,
                                @RequestParam(value = "page-size") Integer pageSize,
                                @RequestParam(value = "building-id") Integer buildingId,

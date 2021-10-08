@@ -21,20 +21,20 @@ public class BuildingController {
     @Autowired
     IBuildingService buildingService;
 
-    @PostMapping("/add_building")
+    @PostMapping("/add-building")
     public AjaxResult addBuilding(@RequestBody BuildingAddDto buildingAddDto){
         buildingService.addBuilding(buildingAddDto);
         return AjaxResult.success();
     }
 
-    @DeleteMapping("/delete_building")
+    @DeleteMapping("/delete-building")
     public AjaxResult deleteBuilding(@RequestParam Integer id){
         if (buildingService.deleteBuilding(id)){
             return AjaxResult.success();
         }
         return AjaxResult.error();
     }
-    @PostMapping("/update_building")
+    @PostMapping("/update-building")
     public AjaxResult updateBuilding(@RequestBody BuildingUpdateDto buildingUpdateDto){
         if(buildingService.updateBuilding(buildingUpdateDto)){
             return AjaxResult.success();
@@ -42,13 +42,13 @@ public class BuildingController {
         return AjaxResult.error();
     }
 
-    @GetMapping("/list_building")
+    @GetMapping("/list-building")
     public AjaxResult listBuilding(@RequestParam(value = "page") Integer page,
                                    @RequestParam(value = "page-size") Integer pageSize,
                                    @RequestParam(value = "name") String name){
         return AjaxResult.success(buildingService.listBuilding(page,pageSize,name));
     }
-    @GetMapping("/detail_building")
+    @GetMapping("/detail-building")
     public AjaxResult detailBuilding(@RequestParam(value = "id") Integer id){
         if (buildingService.dbDecision(id)){
             return AjaxResult.success(buildingService.detailBuilding(id));
