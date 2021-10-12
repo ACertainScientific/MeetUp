@@ -23,10 +23,15 @@ public class UserModel {
      * password
      */
     private String password;
+
+    /**
+     * email
+     */
+    private String email;
     /**
      * isDelete
      */
-    private Integer isDelete;
+    private Integer isDeleted;
     /**
      * createdAt
      */
@@ -36,10 +41,11 @@ public class UserModel {
      * updatedAt
      */
     private Integer updatedAt;
+
     /**
-     * deleteAt
+     * deletedAt
      */
-    private Integer deleteAt;
+    private Integer deletedAt;
 
 
 }
