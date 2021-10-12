@@ -1,11 +1,10 @@
 package com.acertainscientific.meetup.service;
 
-import com.acertainscientific.meetup.dto.BuildingAddDto;
-import com.acertainscientific.meetup.dto.BuildingUpdateDto;
-import com.acertainscientific.meetup.dto.DetailBuildingDto;
-import com.acertainscientific.meetup.dto.PageResponseDto;
+import com.acertainscientific.meetup.dto.*;
 import com.acertainscientific.meetup.model.BuildingModel;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 public interface IBuildingService extends IService<BuildingModel> {
 
@@ -25,5 +24,7 @@ public interface IBuildingService extends IService<BuildingModel> {
      boolean dbDecision(Integer id);
 
      DetailBuildingDto detailBuilding(Integer id);
+
+     List<BuildingListDto> listAllBuildings(String name);
 
 }

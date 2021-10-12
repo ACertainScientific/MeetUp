@@ -61,7 +61,7 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
         PageHelper.startPage(page,pageSize);
         List<BuildingModel> buildingModels = buildingMapper.listBuilding(name);
         PageInfo pageInfo =new PageInfo(buildingModels);
-        List<BuildingListDto> buildingListDtos = modelMapper.map(buildingModels,new TypeToken<List<BuildingModel>>(){}.getType());
+        List<BuildingListDto> buildingListDtos = modelMapper.map(buildingModels,new TypeToken<List<BuildingListDto>>(){}.getType());
         PageResponseDto pageResponseDto= new PageResponseDto();
         pageResponseDto.setList(buildingListDtos);
         pageResponseDto.setTotalCount((int) pageInfo.getTotal());
@@ -70,6 +70,13 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
         pageResponseDto.setCurrentPage(pageInfo.getPageNum());
         return pageResponseDto;
 
+    }
+
+    @Override
+    public List<BuildingListDto> listAllBuildings(String name){
+        List<BuildingModel> buildingModels = buildingMapper.listBuilding(name);
+        List<BuildingListDto> buildingListDtos =  modelMapper.map(buildingModels, new TypeToken<List<BuildingListDto>>(){}.getType());
+        return buildingListDtos;
     }
 
     @Override

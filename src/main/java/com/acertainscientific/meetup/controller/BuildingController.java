@@ -56,4 +56,8 @@ public class BuildingController {
         return AjaxResult.error();
     }
 
+    @GetMapping("list-all-buildings")
+    public AjaxResult listAllBuildings(@RequestParam(value = "name") String name){
+        return AjaxResult.success(buildingService.listAllBuildings(name));
+    }
 }
