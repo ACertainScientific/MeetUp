@@ -3,6 +3,7 @@ package com.acertainscientific.meetup.service.impl;
 
 import com.acertainscientific.meetup.dto.PageResponseDto;
 import com.acertainscientific.meetup.dto.RoomListDto;
+import com.acertainscientific.meetup.dto.UserAddDto;
 import com.acertainscientific.meetup.dto.UserListDto;
 import com.acertainscientific.meetup.mapper.UserMapper;
 import com.acertainscientific.meetup.model.RoomModel;
@@ -35,14 +36,22 @@ public class UserService extends ServiceImpl<UserMapper, UserModel> implements I
         PageHelper.startPage(page, pageSize);
         List<UserModel> userModels = userMapper.listUser(name);
         PageInfo pageInfo = new PageInfo(userModels);
-        List<UserListDto> userListDtos = modelMapper.map(userModels,new TypeToken<List<UserModel>>(){}.getType());
+        List<UserListDto> userListDtos = modelMapper.map(userModels, new TypeToken<List<UserModel>>() {
+        }.getType());
 
-        PageResponseDto pageResponseDto= new PageResponseDto();
+        PageResponseDto pageResponseDto = new PageResponseDto();
         pageResponseDto.setList(userListDtos);
         pageResponseDto.setTotalCount((int) pageInfo.getTotal());
         pageResponseDto.setPageCount(pageInfo.getPages());
         pageResponseDto.setPerPage(pageInfo.getPageSize());
         pageResponseDto.setCurrentPage(pageInfo.getPageNum());
         return pageResponseDto;
+    }
+
+    @Override
+    public void addUser(UserAddDto userAddDto){
+        UserModel userModel = modelMapper.map(userAddDto, UserModel.class);
+        userModel.setCreatedAt((int)(System.currentTimeMillis()/1000));
+        this.save(userModel);
     }
 }
