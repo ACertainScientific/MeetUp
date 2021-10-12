@@ -36,6 +36,10 @@ public class UserModel {
      * updatedAt
      */
     private Integer updatedAt;
+    /**
+     * deleteAt
+     */
+    private Integer deleteAt;
 
 
 }
