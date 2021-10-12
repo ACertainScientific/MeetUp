@@ -9,4 +9,7 @@ public interface IUserService extends IService<UserModel> {
     PageResponseDto listUser(Integer page, Integer pageSize, String name);
 
     void addUser(UserAddDto userAddDto);
+
+    boolean deleteUser(Integer id);
+
 }

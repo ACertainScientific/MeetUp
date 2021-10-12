@@ -23,4 +23,13 @@ public class UserController {
         userService.addUser(userAddDto);
         return AjaxResult.success();
     }
+
+    @PostMapping("/delete-user")
+    public AjaxResult deleteUser(@RequestParam Integer id){
+        if(userService.deleteUser(id)){
+            return AjaxResult.success();
+        }
+        return AjaxResult.error();
+    }
+
 }

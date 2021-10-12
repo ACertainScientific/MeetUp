@@ -54,4 +54,17 @@ public class UserService extends ServiceImpl<UserMapper, UserModel> implements I
         userModel.setCreatedAt((int)(System.currentTimeMillis()/1000));
         this.save(userModel);
     }
+
+    @Override
+    public boolean deleteUser(Integer id){
+        UserModel userModel = this.getById(id);
+        if(userModel != null){
+            userModel.setIsDeleted(1);
+            userModel.setDeletedAt((int)(System.currentTimeMillis()/1000));
+            this.updateById(userModel);
+            return true;
+        }
+        return false;
+    }
+
 }
