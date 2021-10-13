@@ -37,3 +37,8 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     map-camel-to-underscore: true
+
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true

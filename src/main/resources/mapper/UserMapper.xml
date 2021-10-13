@@ -22,4 +22,18 @@
             AND user_name LIKE CONCAT('%', #{name,jdbcType=VARCHAR}, '%')
         </if>
     </select>
+
+    <select id="findByUserName" resultType = "com.acertainscientific.meetup.model.UserModel">
+        SELECT * FROM user
+        WHERE
+        is_deleted = 0 AND
+        user_name = #{userName}
+    </select>
+
+    <select id="findByEmail" resultType = "com.acertainscientific.meetup.model.UserModel">
+        SELECT * FROM user
+        WHERE
+            is_deleted = 0 AND
+            email = #{email}
+    </select>
 </mapper>

@@ -10,4 +10,6 @@ import java.util.List;
 @Component
 public interface UserMapper extends BaseMapper<UserModel> {
     List<UserModel> listUser(@Param("name") String name);
+    UserModel findByUserName(@Param("userName")String userName);
+    UserModel findByEmail(@Param("email")String email);
 }
