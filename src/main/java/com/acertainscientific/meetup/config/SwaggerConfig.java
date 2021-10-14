@@ -2,6 +2,7 @@ package com.acertainscientific.meetup.config;
 
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.parameters.HeaderParameter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,6 +12,7 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.schema.ScalarType;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 
 import java.util.ArrayList;
@@ -31,6 +33,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
 //                .apis(RequestHandlerSelectors.withMethodAnnotation(Operation.class))
                 .paths(PathSelectors.any())
                 .build();
+//                .securitySchemes(securitySchemes())
+//                .securityContexts(securityContexts());
 
     }
 
@@ -43,10 +47,35 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .version("1.0")
                 .build();
     }
+//
+//
+//    private List<SecurityScheme> securitySchemes() {
+//        List<SecurityScheme> securitySchemes = new ArrayList<>();
+//        securitySchemes.add(new ApiKey("Authorization", "Authorization", "header"));
+//        return securitySchemes;
+//    }
+//
+//    private List<SecurityContext> securityContexts() {
+//        List<SecurityContext> securityContexts = new ArrayList<>();
+//        securityContexts.add(SecurityContext.builder()
+//                .securityReferences(defaultAuth()).build());
+////                .forPaths(PathSelectors.regex("^(?!auth).*$")).build());
+//        return securityContexts;
+//    }
+//
+//    private List<SecurityReference> defaultAuth() {
+//        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+//        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+//        authorizationScopes[0] = authorizationScope;
+//        List<SecurityReference> securityReferences = new ArrayList<>();
+//        securityReferences.add(new SecurityReference("X-Authorization", authorizationScopes));
+//        return securityReferences;
+//    }
 
-//    //生成全局通用参数
-//    private List<RequestParameter> getGlobalRequestParameters() {
-//        List<RequestParameter> parameters = new ArrayList<>();
+    //生成全局通用参数
+//    private List<HeaderParameter> getGlobalRequestParameters() {
+//        List<HeaderParameter> parameters = new ArrayList<>();
+//        parameters.add(new HeaderParameter().name("X-Authorization"));
 //        parameters.add(new RequestParameterBuilder()
 //                .name("appid")
 //                .description("平台id")
