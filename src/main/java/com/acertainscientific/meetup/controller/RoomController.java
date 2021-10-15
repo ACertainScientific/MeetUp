@@ -52,7 +52,7 @@ public class RoomController {
                                @RequestParam(value = "page-size") Integer pageSize,
                                @RequestParam(value = "building-id") Integer buildingId,
                                @RequestParam(value = "floor") Integer floor,
-                               @RequestParam(value = "room-name") String roomName){
+                               @RequestParam(value = "room-name",required = false) String roomName){
         return AjaxResult.success(roomService.listRoom(page, pageSize, buildingId, floor, roomName));
     }
 }
