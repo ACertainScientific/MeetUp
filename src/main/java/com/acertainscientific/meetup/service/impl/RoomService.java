@@ -29,27 +29,27 @@ public class RoomService extends ServiceImpl<RoomMapper, RoomModel> implements I
     BuildingService buildingService;
 
     @Override
-    public RoomModel searchById(int id){
+    public RoomModel searchById(int id) {
         return roomMapper.selectById(id);
     }
 
     @Override
-    public boolean addRoom(RoomAddDto roomAddDto){
+    public boolean addRoom(RoomAddDto roomAddDto) {
         RoomModel roomModel = modelMapper.map(roomAddDto, RoomModel.class);
         log.info(String.valueOf(roomAddDto));
         BuildingModel buildingModel = buildingService.getById(roomModel.getBuildingId());
-        if (buildingModel == null || buildingModel.getIsDeleted() == 1 || roomModel.getFloor() > buildingModel.getFloorEnd() || roomModel.getFloor() < buildingModel.getFloorStart()){
+        if (buildingModel == null || buildingModel.getIsDeleted() == 1 || roomModel.getFloor() > buildingModel.getFloorEnd() || roomModel.getFloor() < buildingModel.getFloorStart()) {
             return false;
         }
-        roomModel.setCreatedAt((int)(System.currentTimeMillis()/1000));
+        roomModel.setCreatedAt((int) (System.currentTimeMillis() / 1000));
         this.save(roomModel);
         return true;
     }
 
     @Override
-    public boolean deleteRoom(Integer id){
+    public boolean deleteRoom(Integer id) {
         RoomModel roomModel = this.getById(id);
-        if (roomModel != null){
+        if (roomModel != null) {
             roomModel.setIsDeleted(1);
             roomModel.setDeletedAt((int) (System.currentTimeMillis() / 1000));
             this.updateById(roomModel);
@@ -59,13 +59,14 @@ public class RoomService extends ServiceImpl<RoomMapper, RoomModel> implements I
     }
 
     @Override
-    public PageResponseDto listRoom(Integer page, Integer pageSize, Integer buildingId, Integer floor, String roomName){
+    public PageResponseDto listRoom(Integer page, Integer pageSize, Integer buildingId, Integer floor, String roomName) {
         PageHelper.startPage(page, pageSize);
         List<RoomModel> roomModels = roomMapper.listRoom(buildingId, floor, roomName);
         PageInfo pageInfo = new PageInfo(roomModels);
-        List<RoomListDto> roomListDtos = modelMapper.map(roomModels,new TypeToken<List<RoomModel>>(){}.getType());
+        List<RoomListDto> roomListDtos = modelMapper.map(roomModels, new TypeToken<List<RoomModel>>() {
+        }.getType());
 
-        PageResponseDto pageResponseDto= new PageResponseDto();
+        PageResponseDto pageResponseDto = new PageResponseDto();
         pageResponseDto.setList(roomListDtos);
         pageResponseDto.setTotalCount((int) pageInfo.getTotal());
         pageResponseDto.setPageCount(pageInfo.getPages());
@@ -75,13 +76,13 @@ public class RoomService extends ServiceImpl<RoomMapper, RoomModel> implements I
     }
 
     @Override
-    public boolean roomDecision(Integer id){
+    public boolean roomDecision(Integer id) {
         RoomModel roomModel = this.getById(id);
         return roomModel != null && roomModel.getIsDeleted() != 1;
     }
 
     @Override
-    public DetailRoomDto detailRoomDto(Integer id){
+    public DetailRoomDto detailRoomDto(Integer id) {
         RoomModel roomModel = this.getById(id);
         DetailRoomDto detailRoomDto = new DetailRoomDto();
         detailRoomDto.setName(roomModel.getRoomName());
@@ -90,4 +91,14 @@ public class RoomService extends ServiceImpl<RoomMapper, RoomModel> implements I
         return detailRoomDto;
     }
 
+    @Override
+    public boolean roomUpdate(RoomUpdateDto roomUpdateDto) {
+        RoomModel roomModel = modelMapper.map(roomUpdateDto, RoomModel.class);
+        if (roomModel != null) {
+            roomModel.setUpdatedAt((int) (System.currentTimeMillis() / 1000));
+            this.updateById(roomModel);
+            return true;
+        }
+        return false;
+    }
 }
