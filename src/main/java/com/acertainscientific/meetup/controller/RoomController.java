@@ -66,12 +66,21 @@ public class RoomController {
         return AjaxResult.error();
     }
 
-//    @PostMapping("/checkin/{id}")
-//    public AjaxResult checkIn(@PathVariable Integer id){
-//        if(roomService.checkIn(id)){
-//            return AjaxResult.success();
-//        }else{
-//            return AjaxResult.error();
-//        }
-//    }
+    @PostMapping("/checkin/{id}")
+    public AjaxResult checkIn(@PathVariable Integer id){
+        if(roomService.checkIn(id)){
+            return AjaxResult.success();
+        }else{
+            return AjaxResult.error();
+        }
+    }
+
+    @PostMapping("/clean/{id}")
+    public AjaxResult clean(@PathVariable Integer id){
+        if(roomService.clean(id)){
+            return AjaxResult.success();
+        }else{
+            return AjaxResult.error();
+        }
+    }
 }

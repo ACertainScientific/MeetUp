@@ -103,4 +103,25 @@ public class RoomService extends ServiceImpl<RoomMapper, RoomModel> implements I
         }
         return false;
     }
+
+    @Override
+    public boolean checkIn(Integer id){
+        RoomModel roomModel = this.getById(id);
+        if(roomModel!= null && roomModel.getIsDeleted()==0){
+            roomModel.setStatus(1);
+            this.updateById(roomModel);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean clean(Integer id){
+        RoomModel roomModel = this.getById(id);
+        if(roomModel!= null && roomModel.getIsDeleted()==0){
+            roomModel.setStatus(0);
+            this.updateById(roomModel);
+        }
+        return true;
+    }
+
 }

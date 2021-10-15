@@ -27,4 +27,8 @@ public interface IRoomService extends IService<RoomModel> {
 
     boolean roomUpdate(RoomUpdateDto roomUpdateDto);
 
+    boolean checkIn(Integer id);
+
+    boolean clean(Integer id);
+
 }
