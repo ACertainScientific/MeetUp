@@ -54,7 +54,7 @@ public class RoomController {
                                @RequestParam(value = "page-size") Integer pageSize,
                                @RequestParam(value = "building-id") Integer buildingId,
                                @RequestParam(value = "floor") Integer floor,
-                               @RequestParam(value = "room-name") String roomName){
+                               @RequestParam(value = "room-name",required = false, defaultValue = "") String roomName){
         return AjaxResult.success(roomService.listRoom(page, pageSize, buildingId, floor, roomName));
     }
 
@@ -64,5 +64,23 @@ public class RoomController {
             return AjaxResult.success();
         }
         return AjaxResult.error();
+    }
+
+    @PostMapping("/checkin/{id}")
+    public AjaxResult checkIn(@PathVariable Integer id){
+        if(roomService.checkIn(id)){
+            return AjaxResult.success();
+        }else{
+            return AjaxResult.error();
+        }
+    }
+
+    @PostMapping("/clean/{id}")
+    public AjaxResult clean(@PathVariable Integer id){
+        if(roomService.clean(id)){
+            return AjaxResult.success();
+        }else{
+            return AjaxResult.error();
+        }
     }
 }

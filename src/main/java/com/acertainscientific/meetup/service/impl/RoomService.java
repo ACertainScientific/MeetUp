@@ -94,11 +94,34 @@ public class RoomService extends ServiceImpl<RoomMapper, RoomModel> implements I
     @Override
     public boolean roomUpdate(RoomUpdateDto roomUpdateDto) {
         RoomModel roomModel = modelMapper.map(roomUpdateDto, RoomModel.class);
-        if (roomModel != null) {
+        Integer currentId = roomModel.getId();
+        RoomModel roomModel1 = this.getById(currentId);
+        if (roomModel1 != null && roomModel1.getIsDeleted() != 1) {
             roomModel.setUpdatedAt((int) (System.currentTimeMillis() / 1000));
             this.updateById(roomModel);
             return true;
         }
         return false;
     }
+
+    @Override
+    public boolean checkIn(Integer id){
+        RoomModel roomModel = this.getById(id);
+        if(roomModel!= null && roomModel.getIsDeleted()==0){
+            roomModel.setStatus(1);
+            this.updateById(roomModel);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean clean(Integer id){
+        RoomModel roomModel = this.getById(id);
+        if(roomModel!= null && roomModel.getIsDeleted()==0){
+            roomModel.setStatus(0);
+            this.updateById(roomModel);
+        }
+        return true;
+    }
+
 }

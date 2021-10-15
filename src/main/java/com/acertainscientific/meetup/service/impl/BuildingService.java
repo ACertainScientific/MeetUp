@@ -48,7 +48,9 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
     @Override
     public boolean updateBuilding(BuildingUpdateDto buildingUpdateDto){
         BuildingModel buildingModel = modelMapper.map(buildingUpdateDto, BuildingModel.class);
-        if(buildingModel != null){
+        Integer currentId = buildingModel.getId();
+        BuildingModel buildingModel1 = this.getById(currentId);
+        if(buildingModel1 != null && buildingModel1.getIsDeleted() != 1 && buildingModel.getFloorEnd() >= buildingModel.getFloorStart()){
             buildingModel.setUpdatedAt((int)(System.currentTimeMillis()/1000));
             this.updateById(buildingModel);
             return true;

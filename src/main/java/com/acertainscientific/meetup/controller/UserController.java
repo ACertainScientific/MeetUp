@@ -22,7 +22,7 @@ public class UserController {
     @GetMapping("/list-user")
     public AjaxResult listUser(@RequestParam(value = "page") Integer page,
                                @RequestParam(value = "page-size") Integer pageSize,
-                               @RequestParam(value = "name" ,required = false) String name){
+                               @RequestParam(value = "name" ,required = false, defaultValue = "") String name){
         return AjaxResult.success(userService.listUser(page, pageSize, name));
     }
 
