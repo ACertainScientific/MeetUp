@@ -49,4 +49,10 @@ public class RoomModel {
 
 
     private Integer isDeleted;
+
+    /**
+     * status
+     * 0=avaliable 1=occupied 2=dirty
+     */
+    private Integer status;
 }

@@ -45,7 +45,7 @@ public class BuildingController {
     @GetMapping("/list-building")
     public AjaxResult listBuilding(@RequestParam(value = "page") Integer page,
                                    @RequestParam(value = "page-size") Integer pageSize,
-                                   @RequestParam(value = "name",required = false) String name){
+                                   @RequestParam(value = "name",required = false, defaultValue = "") String name){
         return AjaxResult.success(buildingService.listBuilding(page,pageSize,name));
     }
     @GetMapping("/detail-building")
@@ -57,7 +57,7 @@ public class BuildingController {
     }
 
     @GetMapping("list-all-buildings")
-    public AjaxResult listAllBuildings(@RequestParam(value = "name",required = false) String name){
+    public AjaxResult listAllBuildings(@RequestParam(value = "name",required = false, defaultValue = "") String name){
         return AjaxResult.success(buildingService.listAllBuildings(name));
     }
 }

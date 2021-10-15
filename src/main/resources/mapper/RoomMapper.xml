@@ -11,6 +11,7 @@
         <result column="updated_at" jdbcType="INTEGER" property="updatedAt"/>
         <result column="deleted_at" jdbcType="INTEGER" property="deletedAt"/>
         <result column="is_deleted" jdbcType="INTEGER" property="isDeleted"/>
+        <result column="status" jdbcType="INTEGER" property = "status"/>
     </resultMap>
     <select id="listRoom" resultType="com.acertainscientific.meetup.model.RoomModel">
         SELECT * FROM room
