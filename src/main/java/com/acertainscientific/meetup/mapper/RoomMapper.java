@@ -12,4 +12,6 @@ import java.util.List;
 public interface RoomMapper extends BaseMapper<RoomModel> {
 
     List<RoomModel> listRoom(@Param("buildingId")Integer buildingId, @Param("floor")Integer floor, @Param("roomName") String roomName);
+
+    Integer searchAllByRoomId(@Param("id") Integer id);
 }

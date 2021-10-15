@@ -4,4 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.acertainscientific.meetup.mapper.AppointmentMapper">
 
+    <select id="appointmentsGivenTime" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM appointment WHERE
+        is_deleted = 0 and room_id = #{roomId} and
+        date = #{dateTime}
+        and
+        (start_time BETWEEN #{startTime} AND #{endTime} or
+        end_time BETWEEN #{startTime} AND #{endTime} or
+        #{startTime} BETWEEN start_time AND  end_time or
+        #{endTime} BETWEEN start_time AND end_time)
+    </select>
 </mapper>

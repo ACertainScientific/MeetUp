@@ -26,5 +26,5 @@ public class AppointmentModel {
 
     private Integer date;
 
-    private Integer isDelete;
+    private Integer isDeleted;
 }

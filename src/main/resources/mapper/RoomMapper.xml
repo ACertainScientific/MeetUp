@@ -29,6 +29,10 @@
         ORDER BY
             room_name ASC
     </select>
+    <select id="searchAllByRoomId" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM room
+        WHERE is_deleted = 0 AND id = #{id}
+    </select>
 
 
 </mapper>

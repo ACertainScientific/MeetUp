@@ -29,4 +29,16 @@ public class AppointmentController {
             return AjaxResult.error();
         }
     }
+
+
+//    @PostMapping("/update_appointment")
+//    public AjaxResult updateAppointment(@RequestParam(value = "id") Integer id,
+//                                        @RequestParam(value = "start-time") Integer startTime,
+//                                        @RequestParam(value = "end-time") Integer endTime){
+//        if (iAppointmentService.updateAppointmentService(id, startTime, endTime)){
+//            return AjaxResult.success();
+//        }else{
+//            return AjaxResult.error();
+//        }
+//    }
 }
