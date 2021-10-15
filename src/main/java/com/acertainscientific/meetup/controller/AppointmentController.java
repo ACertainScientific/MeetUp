@@ -30,15 +30,27 @@ public class AppointmentController {
         }
     }
 
-
-//    @PostMapping("/update_appointment")
-//    public AjaxResult updateAppointment(@RequestParam(value = "id") Integer id,
-//                                        @RequestParam(value = "start-time") Integer startTime,
-//                                        @RequestParam(value = "end-time") Integer endTime){
-//        if (iAppointmentService.updateAppointmentService(id, startTime, endTime)){
-//            return AjaxResult.success();
-//        }else{
-//            return AjaxResult.error();
-//        }
+//    @GetMapping("/list_appointment")
+//    public AjaxResult listAppointment(@RequestParam (value = "page") Integer page,
+//                                      @RequestParam(value = "page-size") Integer pageSize,
+//                                      @RequestParam(value = "roomId",required = false, defaultValue = "") Integer roomId,
+//                                      @RequestParam(value = "startTime", required = false, defaultValue = "") Integer startTime,
+//                                      @RequestParam(value = "endTime", required = false, defaultValue = "") Integer endTime,
+//                                      @RequestParam(value = "userId", required = false, defaultValue = "") String userId,
+//                                      @RequestParam(value = "month", required = false, defaultValue = "") Integer month,
+//                                      @RequestParam(value = "year", required = false, defaultValue = "") Integer year,
+//                                      @RequestParam(value = "date", required = false, defaultValue = "") Integer date){
+//        return AjaxResult.success(iAppointmentService.listAppointment(page, pageSize, roomId, startTime, endTime,
+//                userId, month, year, date));
 //    }
+
+    @GetMapping("/detail-appointments")
+    public  AjaxResult detailAppointment(@RequestParam(value = "id") Integer id){
+        if(iAppointmentService.appointmentDecision(id)){
+            return AjaxResult.success(iAppointmentService.detailAppointment(id));
+        }
+        return AjaxResult.error();
+    }
+
+
 }
