@@ -11,5 +11,7 @@ import java.util.List;
 public interface AppointmentMapper extends BaseMapper<AppointmentModel> {
     Integer appointmentsGivenTime(@Param("startTime")Integer startTime, @Param("endTime") Integer endTime,
                                                      @Param("roomId") Integer roomId,
-                                                     @Param("dateTime") Integer dateTime);
+                                                     @Param("dateTime") Integer dateTime,
+                                                        @Param("year") Integer year,
+                                                @Param("month") Integer month);
 }

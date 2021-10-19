@@ -9,6 +9,10 @@
         is_deleted = 0 and room_id = #{roomId} and
         date = #{dateTime}
         and
+        month = #{month}
+        and
+        year = #{year}
+        and
         (start_time BETWEEN #{startTime} AND #{endTime} or
         end_time BETWEEN #{startTime} AND #{endTime} or
         #{startTime} BETWEEN start_time AND  end_time or
