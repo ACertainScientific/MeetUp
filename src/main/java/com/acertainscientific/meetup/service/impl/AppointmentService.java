@@ -1,12 +1,14 @@
 package com.acertainscientific.meetup.service.impl;
 
 import com.acertainscientific.meetup.dto.AppointmentAddDto;
+import com.acertainscientific.meetup.dto.AppointmentUpdateDto;
 import com.acertainscientific.meetup.dto.DetailAppointmentDto;
 import com.acertainscientific.meetup.dto.PageResponseDto;
 import com.acertainscientific.meetup.mapper.AppointmentMapper;
 import com.acertainscientific.meetup.mapper.RoomMapper;
 import com.acertainscientific.meetup.model.AppointmentModel;
 import com.acertainscientific.meetup.service.IAppointmentService;
+import com.acertainscientific.meetup.util.RedisUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import org.modelmapper.ModelMapper;
@@ -19,6 +21,8 @@ import java.util.Calendar;
 
 @Service
 public class AppointmentService extends ServiceImpl<AppointmentMapper, AppointmentModel> implements IAppointmentService {
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Autowired
     private RoomMapper roomMapper;
@@ -86,6 +90,29 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
     }
 
     @Override
+    public boolean updateAppointmentService(AppointmentUpdateDto appointmentUpdateDto){
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        AppointmentModel appointmentModel = modelMapper.map(appointmentUpdateDto, AppointmentModel.class);
+        Integer appointmentId = appointmentModel.getId();
+        AppointmentModel appointmentModel1 = this.getById(appointmentId);
+
+        if (appointmentModel1 != null && appointmentModel1.getIsDeleted() != 1 &&isValidTime(appointmentModel.getDate(), appointmentModel.getMonth(),
+                appointmentModel.getYear(), appointmentModel.getStartTime(), appointmentModel.getEndTime()) &&
+        appointmentMapper.appointmentsWithoutSelfTime(appointmentModel.getStartTime(),
+                appointmentModel.getEndTime(), appointmentModel.getRoomId(),
+                appointmentModel.getDate(), appointmentModel.getYear(), appointmentModel.getMonth(),
+                appointmentId) == 0){
+            this.updateById(appointmentModel);
+            if (redisUtil.hasKey("Appointment:" + appointmentId)){
+                redisUtil.del("Appointment:" + appointmentId);
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
     public boolean addAppointmentService(AppointmentAddDto appointmentAddDto) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         AppointmentModel appointmentModel = modelMapper.map(appointmentAddDto, AppointmentModel.class);
@@ -120,12 +147,19 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
 
     @Override
     public boolean appointmentDecision(Integer id){
+        if (redisUtil.hasKey("Appointment:" + id)) return true;
         AppointmentModel appointmentModel = this.getById(id);
-        return appointmentModel != null && appointmentModel.getIsDeleted() != 1;
+        if (appointmentModel != null && appointmentModel.getIsDeleted() != 1){
+            return true;
+        }
+        return false;
     }
 
     @Override
     public DetailAppointmentDto detailAppointment(Integer id){
+        if (redisUtil.hasKey("Appointment:" + id)){
+            return modelMapper.map(redisUtil.get("Appointment:" + id), DetailAppointmentDto.class);
+        }
         AppointmentModel appointmentModel = this.getById(id);
         DetailAppointmentDto detailAppointmentDto = new DetailAppointmentDto();
         detailAppointmentDto.setRoomId(appointmentModel.getRoomId());
@@ -135,6 +169,7 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
         detailAppointmentDto.setDate(appointmentModel.getDate());
         detailAppointmentDto.setMonth(appointmentModel.getMonth());
         detailAppointmentDto.setYear(appointmentModel.getYear());
+        redisUtil.set("Appointment:"+id, detailAppointmentDto);
         return detailAppointmentDto;
     }
 

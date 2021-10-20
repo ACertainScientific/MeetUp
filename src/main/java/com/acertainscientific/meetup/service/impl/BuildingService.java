@@ -4,6 +4,7 @@ import com.acertainscientific.meetup.dto.*;
 import com.acertainscientific.meetup.mapper.BuildingMapper;
 import com.acertainscientific.meetup.model.BuildingModel;
 import com.acertainscientific.meetup.service.IBuildingService;
+import com.acertainscientific.meetup.util.RedisUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -19,6 +20,8 @@ import java.util.List;
 @Service
 @Slf4j
 public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> implements IBuildingService {
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Autowired
     private BuildingMapper buildingMapper;
@@ -38,6 +41,9 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
             buildingModel.setIsDeleted(1);
             buildingModel.setDeletedAt((int)(System.currentTimeMillis()/1000));
             this.updateById(buildingModel);
+            if (redisUtil.hasKey("Building:" + buildingModel.getId())){
+                redisUtil.del("Building:" + buildingModel.getId());
+            }
             return true;
         }
 
@@ -53,6 +59,9 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
         if(buildingModel1 != null && buildingModel1.getIsDeleted() != 1 && buildingModel.getFloorEnd() >= buildingModel.getFloorStart()){
             buildingModel.setUpdatedAt((int)(System.currentTimeMillis()/1000));
             this.updateById(buildingModel);
+            if (redisUtil.hasKey("Building:" + buildingModel.getId())){
+                redisUtil.del("Building:" + buildingModel.getId());
+            }
             return true;
         }
         return false;
@@ -83,17 +92,24 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
 
     @Override
     public boolean dbDecision(Integer id){
+        if (redisUtil.hasKey("Building:" + id)){
+            return true;
+        }
         BuildingModel buildingModel = this.getById(id);
         return buildingModel != null && buildingModel.getIsDeleted() != 1;
     }
 
     @Override
     public DetailBuildingDto detailBuilding(Integer id){
+        if (redisUtil.hasKey("Building:" + id)){
+            return modelMapper.map(redisUtil.get("Building:"+id), DetailBuildingDto.class);
+        }
         BuildingModel buildingModel = this.getById(id);
         DetailBuildingDto  detailBuildingDto = new DetailBuildingDto();
         detailBuildingDto.setName(buildingModel.getName());
         detailBuildingDto.setFloorStart(buildingModel.getFloorStart());
         detailBuildingDto.setFloorEnd(buildingModel.getFloorEnd());
+        redisUtil.set("Building:"+buildingModel.getId().toString(), detailBuildingDto);
         return detailBuildingDto;
 
     }
