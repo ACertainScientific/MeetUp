@@ -102,6 +102,7 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
                 appointmentModel.getEndTime(), appointmentModel.getRoomId(),
                 appointmentModel.getDate(), appointmentModel.getYear(), appointmentModel.getMonth(),
                 appointmentId) == 0){
+            appointmentModel.setUpdatedAt((int)(System.currentTimeMillis()/1000));
             this.updateById(appointmentModel);
             if (redisUtil.hasKey("Appointment:" + appointmentId)){
                 redisUtil.del("Appointment:" + appointmentId);
@@ -123,7 +124,7 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
         ) {
             return false;
         }
-
+        appointmentModel.setCreatedAt((int)(System.currentTimeMillis()/1000));
         this.save(appointmentModel);
         return true;
     }
@@ -133,6 +134,11 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
         AppointmentModel appointmentModel = this.getById(id);
         if (appointmentModel != null){
             appointmentModel.setIsDeleted(1);
+            appointmentModel.setDeletedAt((int)(System.currentTimeMillis()/1000));
+            this.updateById(appointmentModel);
+            if (redisUtil.hasKey("Appointment:" + id)){
+                redisUtil.del("Appointment:" + id);
+            }
             return true;
         }
         return false;
