@@ -2,6 +2,7 @@ package com.acertainscientific.meetup.controller;
 
 import com.acertainscientific.meetup.common.AjaxResult;
 import com.acertainscientific.meetup.dto.AppointmentAddDto;
+import com.acertainscientific.meetup.dto.AppointmentUpdateDto;
 import com.acertainscientific.meetup.service.IAppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +22,18 @@ public class AppointmentController {
         }
     }
 
-    @DeleteMapping("/delete_appointment")
+    @DeleteMapping("/delete-appointment")
     public AjaxResult deleteAppointment(@RequestParam Integer id){
         if( iAppointmentService.deleteAppointmentService(id)){
+            return AjaxResult.success();
+        }else{
+            return AjaxResult.error();
+        }
+    }
+
+    @PostMapping("/update-appointment")
+    public AjaxResult updateAppointment(@RequestBody AppointmentUpdateDto appointmentUpdateDto){
+        if (iAppointmentService.updateAppointmentService(appointmentUpdateDto)){
             return AjaxResult.success();
         }else{
             return AjaxResult.error();

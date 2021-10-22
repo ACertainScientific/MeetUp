@@ -14,4 +14,11 @@ public interface AppointmentMapper extends BaseMapper<AppointmentModel> {
                                                      @Param("dateTime") Integer dateTime,
                                                         @Param("year") Integer year,
                                                 @Param("month") Integer month);
+
+    Integer appointmentsWithoutSelfTime(@Param("startTime")Integer startTime, @Param("endTime") Integer endTime,
+                                        @Param("roomId") Integer roomId,
+                                        @Param("dateTime") Integer dateTime,
+                                        @Param("year") Integer year,
+                                        @Param("month") Integer month,
+                                        @Param("id") Integer id);
 }

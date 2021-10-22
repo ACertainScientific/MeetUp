@@ -4,7 +4,9 @@ import com.acertainscientific.meetup.dto.*;
 import com.acertainscientific.meetup.mapper.RoomMapper;
 import com.acertainscientific.meetup.model.BuildingModel;
 import com.acertainscientific.meetup.model.RoomModel;
+import com.acertainscientific.meetup.model.UserModel;
 import com.acertainscientific.meetup.service.IRoomService;
+import com.acertainscientific.meetup.util.RedisUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -19,6 +21,10 @@ import java.util.List;
 @Service
 @Slf4j
 public class RoomService extends ServiceImpl<RoomMapper, RoomModel> implements IRoomService {
+
+    @Autowired
+    private RedisUtil redisUtil;
+
     @Autowired
     RoomMapper roomMapper;
 
@@ -52,6 +58,9 @@ public class RoomService extends ServiceImpl<RoomMapper, RoomModel> implements I
         if (roomModel != null) {
             roomModel.setIsDeleted(1);
             roomModel.setDeletedAt((int) (System.currentTimeMillis() / 1000));
+            if (redisUtil.hasKey("Room:" + roomModel.getId())){
+                redisUtil.del("Room:" + roomModel.getId());
+            }
             this.updateById(roomModel);
             return true;
         }
@@ -83,11 +92,16 @@ public class RoomService extends ServiceImpl<RoomMapper, RoomModel> implements I
 
     @Override
     public DetailRoomDto detailRoomDto(Integer id) {
+        if (redisUtil.hasKey("Room:" + id)){
+            return modelMapper.map(redisUtil.get("Room:" + id), DetailRoomDto.class);
+        }
         RoomModel roomModel = this.getById(id);
         DetailRoomDto detailRoomDto = new DetailRoomDto();
         detailRoomDto.setName(roomModel.getRoomName());
         detailRoomDto.setBuildingId(roomModel.getBuildingId());
         detailRoomDto.setFloor(roomModel.getFloor());
+
+        redisUtil.set("Room:"+roomModel.getId().toString(), detailRoomDto);
         return detailRoomDto;
     }
 
@@ -99,6 +113,10 @@ public class RoomService extends ServiceImpl<RoomMapper, RoomModel> implements I
         if (roomModel1 != null && roomModel1.getIsDeleted() != 1) {
             roomModel.setUpdatedAt((int) (System.currentTimeMillis() / 1000));
             this.updateById(roomModel);
+
+            if (redisUtil.hasKey("Room:" + roomModel.getId())){
+                redisUtil.del("Room:" + roomModel.getId());
+            }
             return true;
         }
         return false;
@@ -109,6 +127,9 @@ public class RoomService extends ServiceImpl<RoomMapper, RoomModel> implements I
         RoomModel roomModel = this.getById(id);
         if(roomModel!= null && roomModel.getIsDeleted()==0){
             roomModel.setStatus(1);
+            if (redisUtil.hasKey("Room:" + roomModel.getId())){
+                redisUtil.del("Room:" + roomModel.getId());
+            }
             this.updateById(roomModel);
         }
         return true;
@@ -119,6 +140,9 @@ public class RoomService extends ServiceImpl<RoomMapper, RoomModel> implements I
         RoomModel roomModel = this.getById(id);
         if(roomModel!= null && roomModel.getIsDeleted()==0){
             roomModel.setStatus(0);
+            if (redisUtil.hasKey("Room:" + roomModel.getId())){
+                redisUtil.del("Room:" + roomModel.getId());
+            }
             this.updateById(roomModel);
         }
         return true;

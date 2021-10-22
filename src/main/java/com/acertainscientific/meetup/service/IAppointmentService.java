@@ -1,6 +1,7 @@
 package com.acertainscientific.meetup.service;
 
 import com.acertainscientific.meetup.dto.AppointmentAddDto;
+import com.acertainscientific.meetup.dto.AppointmentUpdateDto;
 import com.acertainscientific.meetup.dto.DetailAppointmentDto;
 import com.acertainscientific.meetup.dto.PageResponseDto;
 import com.acertainscientific.meetup.model.AppointmentModel;
@@ -18,4 +19,6 @@ public interface IAppointmentService extends IService<AppointmentModel> {
     public boolean appointmentDecision(Integer id);
 
     public DetailAppointmentDto detailAppointment(Integer id);
+
+    boolean updateAppointmentService(AppointmentUpdateDto appointmentUpdateDto);
 }

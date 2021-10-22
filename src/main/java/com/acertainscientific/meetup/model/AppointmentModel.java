@@ -27,4 +27,19 @@ public class AppointmentModel {
     private Integer date;
 
     private Integer isDeleted;
+
+    /**
+     * created_at
+     */
+    private Integer createdAt;
+
+    /**
+     * updated_at
+     */
+    private Integer updatedAt;
+
+    /**
+     * deleted_at
+     */
+    private Integer deletedAt;
 }
