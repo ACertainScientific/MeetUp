@@ -27,8 +27,6 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
     private BuildingMapper buildingMapper;
     @Autowired
     private ModelMapper modelMapper;
-    @Autowired
-    private RedisUtil redisUtil;
     @Override
     public void addBuilding(BuildingAddDto buildingAddDto){
         BuildingModel buildingModel = modelMapper.map(buildingAddDto, BuildingModel.class);
@@ -40,9 +38,6 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
     public boolean deleteBuilding(Integer id){
         BuildingModel buildingModel = this.getById(id);
         if (buildingModel != null){
-            if(redisUtil.hasKey("Building:"+id.toString())){
-                redisUtil.del("Building:"+ id.toString());
-            }
             buildingModel.setIsDeleted(1);
             buildingModel.setDeletedAt((int)(System.currentTimeMillis()/1000));
             this.updateById(buildingModel);

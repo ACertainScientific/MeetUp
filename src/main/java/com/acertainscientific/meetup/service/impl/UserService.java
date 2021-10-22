@@ -1,15 +1,13 @@
 package com.acertainscientific.meetup.service.impl;
 
 
-import com.acertainscientific.meetup.dto.PageResponseDto;
-import com.acertainscientific.meetup.dto.RoomListDto;
-import com.acertainscientific.meetup.dto.UserAddDto;
-import com.acertainscientific.meetup.dto.UserListDto;
+import com.acertainscientific.meetup.dto.*;
 import com.acertainscientific.meetup.mapper.UserMapper;
 import com.acertainscientific.meetup.model.RoomModel;
 import com.acertainscientific.meetup.model.UserModel;
 import com.acertainscientific.meetup.pojo.LoginInfo;
 import com.acertainscientific.meetup.service.IUserService;
+import com.acertainscientific.meetup.util.RedisUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -25,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 @Service
 public class UserService extends ServiceImpl<UserMapper, UserModel> implements IUserService {
 
@@ -36,6 +35,9 @@ public class UserService extends ServiceImpl<UserMapper, UserModel> implements I
 
     @Autowired
     ModelMapper modelMapper;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Override
     public PageResponseDto listUser(Integer page, Integer pageSize, String name) {
@@ -73,6 +75,9 @@ public class UserService extends ServiceImpl<UserMapper, UserModel> implements I
     public boolean deleteUser(Integer id){
         UserModel userModel = this.getById(id);
         if(userModel != null){
+            if (redisUtil.hasKey("User:" + id)){
+                redisUtil.del("User:" + id);
+            }
             userModel.setIsDeleted(1);
             userModel.setDeletedAt((int)(System.currentTimeMillis()/1000));
             this.updateById(userModel);
@@ -85,15 +90,23 @@ public class UserService extends ServiceImpl<UserMapper, UserModel> implements I
     public LoginInfo login(UserAddDto userAddDto){
         UserModel userModel = null;
         LoginInfo loginInfo = new LoginInfo();
-        if(userAddDto.getUserName()!=null && !userAddDto.getUserName().equals("")){
+        int flag = 0;
+        if (redisUtil.hasKey("User:" + userAddDto.getUserName())){
+            userModel = modelMapper.map(redisUtil.get("User:" + userAddDto.getUserName()), UserModel.class);
+            flag = 1;
+        }
+        if(userAddDto.getUserName()!=null && !userAddDto.getUserName().equals("") && flag == 0){
             userModel = userMapper.findByUserName(userAddDto.getUserName());
-        }else if(userAddDto.getEmail()!=null && !userAddDto.getEmail().equals("")){
+        }else if(userAddDto.getEmail()!=null && !userAddDto.getEmail().equals("") && flag == 0){
             userModel = userMapper.findByEmail(userAddDto.getEmail());
         }
 
         if(userModel == null){
             loginInfo.setCode(1);
             return loginInfo;
+        }
+        if (flag == 0){
+            redisUtil.set("User:" + userAddDto.getUserName(), userModel);
         }
 
         if(DigestUtils.md5DigestAsHex(userAddDto.getPassword().getBytes(StandardCharsets.UTF_8)).equals(userModel.getPassword())
