@@ -15,7 +15,7 @@ public class RoomController {
     @Autowired
     IRoomService roomService;
 
-    @GetMapping("/room-search/{id}")
+    @GetMapping("/room/search/{id}")
     public AjaxResult searchById(@PathVariable Integer id) {
         RoomModel roomModel = roomService.searchById(id);
         if (roomModel == null || roomModel.getIsDeleted() == 1){
@@ -25,7 +25,7 @@ public class RoomController {
         return AjaxResult.success(roomModel);
     }
 
-    @PostMapping("/add-room")
+    @PostMapping("/room/add")
     public AjaxResult addRoom(@RequestBody RoomAddDto roomAddDto){
         if (roomService.addRoom(roomAddDto)){
             return AjaxResult.success();
@@ -33,7 +33,7 @@ public class RoomController {
         return AjaxResult.error();
     }
 
-    @PostMapping("/delete-room")
+    @PostMapping("/room/delete")
     public AjaxResult deleteRoom(@RequestParam Integer id){
         if (roomService.deleteRoom(id)){
             return AjaxResult.success();
@@ -41,7 +41,7 @@ public class RoomController {
         return AjaxResult.error();
     }
 
-    @GetMapping("/detail-room")
+    @GetMapping("/room/detail")
     public AjaxResult detailBuilding(@RequestParam(value = "id") Integer id){
         if(roomService.roomDecision(id)){
             return AjaxResult.success(roomService.detailRoomDto(id));
@@ -49,7 +49,7 @@ public class RoomController {
         return AjaxResult.error();
     }
 
-    @GetMapping("/list-room")
+    @GetMapping("/room/list")
     public AjaxResult ListRoom(@RequestParam(value = "page") Integer page,
                                @RequestParam(value = "page-size") Integer pageSize,
                                @RequestParam(value = "building-id") Integer buildingId,
@@ -58,7 +58,7 @@ public class RoomController {
         return AjaxResult.success(roomService.listRoom(page, pageSize, buildingId, floor, roomName));
     }
 
-    @PostMapping("/update-room")
+    @PostMapping("/room/update")
     public AjaxResult updateBuilding(@RequestBody RoomUpdateDto roomUpdateDto){
         if(roomService.roomUpdate(roomUpdateDto)){
             return AjaxResult.success();
@@ -66,7 +66,7 @@ public class RoomController {
         return AjaxResult.error();
     }
 
-    @PostMapping("/checkin/{id}")
+    @PostMapping("/room/checkin/{id}")
     public AjaxResult checkIn(@PathVariable Integer id){
         if(roomService.checkIn(id)){
             return AjaxResult.success();
@@ -75,7 +75,7 @@ public class RoomController {
         }
     }
 
-    @PostMapping("/clean/{id}")
+    @PostMapping("/room/clean/{id}")
     public AjaxResult clean(@PathVariable Integer id){
         if(roomService.clean(id)){
             return AjaxResult.success();

@@ -21,20 +21,20 @@ public class BuildingController {
     @Autowired
     IBuildingService buildingService;
 
-    @PostMapping("/add-building")
+    @PostMapping("/building/add")
     public AjaxResult addBuilding(@RequestBody BuildingAddDto buildingAddDto){
         buildingService.addBuilding(buildingAddDto);
         return AjaxResult.success();
     }
 
-    @DeleteMapping("/delete-building")
+    @DeleteMapping("/building/delete")
     public AjaxResult deleteBuilding(@RequestParam Integer id){
         if (buildingService.deleteBuilding(id)){
             return AjaxResult.success();
         }
         return AjaxResult.error();
     }
-    @PostMapping("/update-building")
+    @PostMapping("/building/update")
     public AjaxResult updateBuilding(@RequestBody BuildingUpdateDto buildingUpdateDto){
         if(buildingService.updateBuilding(buildingUpdateDto)){
             return AjaxResult.success();
@@ -42,13 +42,13 @@ public class BuildingController {
         return AjaxResult.error();
     }
 
-    @GetMapping("/list-building")
+    @GetMapping("/building/list")
     public AjaxResult listBuilding(@RequestParam(value = "page") Integer page,
                                    @RequestParam(value = "page-size") Integer pageSize,
                                    @RequestParam(value = "name",required = false, defaultValue = "") String name){
         return AjaxResult.success(buildingService.listBuilding(page,pageSize,name));
     }
-    @GetMapping("/detail-building")
+    @GetMapping("/building/detail")
     public AjaxResult detailBuilding(@RequestParam(value = "id") Integer id){
         if (buildingService.dbDecision(id)){
             return AjaxResult.success(buildingService.detailBuilding(id));
@@ -56,7 +56,7 @@ public class BuildingController {
         return AjaxResult.error();
     }
 
-    @GetMapping("list-all-buildings")
+    @GetMapping("/building/list/all")
     public AjaxResult listAllBuildings(@RequestParam(value = "name",required = false, defaultValue = "") String name){
         return AjaxResult.success(buildingService.listAllBuildings(name));
     }

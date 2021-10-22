@@ -54,7 +54,7 @@ public class AppointmentController {
 //                userId, month, year, date));
 //    }
 
-    @GetMapping("/appointments/detail")
+    @GetMapping("/appointment/detail")
     public  AjaxResult detailAppointment(@RequestParam(value = "id") Integer id){
         if(iAppointmentService.appointmentDecision(id)){
             return AjaxResult.success(iAppointmentService.detailAppointment(id));
