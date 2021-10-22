@@ -18,7 +18,7 @@ public class AppointmentModel {
 
     private Integer endTime;
 
-    private String userId;
+    private Integer userId;
 
     private Integer month;
 

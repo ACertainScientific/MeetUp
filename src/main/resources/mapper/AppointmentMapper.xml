@@ -19,6 +19,10 @@
         #{endTime} BETWEEN start_time AND end_time)
     </select>
 
+    <select id="isValidUser" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM user WHERE
+        is_delete = 0 and id = #{id}
+    </select>
 
     <select id="appointmentsWithoutSelfTime" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM appointment WHERE
