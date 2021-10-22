@@ -47,5 +47,10 @@ public class UserModel {
      */
     private Integer deletedAt;
 
+    /**
+     * type
+     */
+    private Integer type;
+
 
 }
