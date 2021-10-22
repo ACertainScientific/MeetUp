@@ -21,4 +21,6 @@ public interface AppointmentMapper extends BaseMapper<AppointmentModel> {
                                         @Param("year") Integer year,
                                         @Param("month") Integer month,
                                         @Param("id") Integer id);
+
+    Integer isValidUser(@Param("id") Integer id);
 }

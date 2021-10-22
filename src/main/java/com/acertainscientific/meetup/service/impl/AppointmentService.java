@@ -95,7 +95,9 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
         AppointmentModel appointmentModel = modelMapper.map(appointmentUpdateDto, AppointmentModel.class);
         Integer appointmentId = appointmentModel.getId();
         AppointmentModel appointmentModel1 = this.getById(appointmentId);
-
+        if (appointmentMapper.isValidUser(appointmentModel.getUserId()) == 0){
+            return false;
+        }
         if (appointmentModel1 != null && appointmentModel1.getIsDeleted() != 1 &&isValidTime(appointmentModel.getDate(), appointmentModel.getMonth(),
                 appointmentModel.getYear(), appointmentModel.getStartTime(), appointmentModel.getEndTime()) &&
         appointmentMapper.appointmentsWithoutSelfTime(appointmentModel.getStartTime(),
@@ -117,7 +119,8 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
     public boolean addAppointmentService(AppointmentAddDto appointmentAddDto) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         AppointmentModel appointmentModel = modelMapper.map(appointmentAddDto, AppointmentModel.class);
-        if (!isValidTime(appointmentModel.getDate(), appointmentModel.getMonth(), appointmentModel.getYear(),
+
+        if (appointmentMapper.isValidUser(appointmentModel.getUserId()) == 0 || !isValidTime(appointmentModel.getDate(), appointmentModel.getMonth(), appointmentModel.getYear(),
                 appointmentModel.getStartTime(), appointmentModel.getEndTime()) || appointmentMapper.appointmentsGivenTime(appointmentModel.getStartTime(), appointmentModel.getEndTime(),
                 appointmentModel.getRoomId(), appointmentModel.getDate(), appointmentModel.getYear(), appointmentModel.getMonth()) > 0 ||
         roomMapper.searchAllByRoomId(appointmentModel.getRoomId()) == 0
