@@ -14,4 +14,6 @@ public class UserAddDto {
     private String password;
 
     private String email;
+
+    private Integer type;
 }

@@ -12,6 +12,7 @@
         <result column="updated_at" jdbcType="INTEGER" property="updatedAt"/>
         <result column="deleted_at" jdbcType="INTEGER" property="deletedAt"/>
         <result column="is_deleted" jdbcType="INTEGER" property="isDeleted"/>
+        <result column="type" jdbcType = "INTEGER" property = "type"/>
     </resultMap>
 
     <select id="listUser" resultType="com.acertainscientific.meetup.model.UserModel">

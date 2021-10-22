@@ -13,7 +13,7 @@ public class AppointmentController {
     @Autowired
     IAppointmentService iAppointmentService;
 
-    @PostMapping("/add-appointment")
+    @PostMapping("/appointment/add")
     public AjaxResult addAppointment(@RequestBody AppointmentAddDto appointmentAddDto){
         if(iAppointmentService.addAppointmentService(appointmentAddDto)){
             return AjaxResult.success();
@@ -22,7 +22,7 @@ public class AppointmentController {
         }
     }
 
-    @DeleteMapping("/delete-appointment")
+    @DeleteMapping("/appointment/delete")
     public AjaxResult deleteAppointment(@RequestParam Integer id){
         if( iAppointmentService.deleteAppointmentService(id)){
             return AjaxResult.success();
@@ -31,7 +31,7 @@ public class AppointmentController {
         }
     }
 
-    @PostMapping("/update-appointment")
+    @PostMapping("/appointment/update")
     public AjaxResult updateAppointment(@RequestBody AppointmentUpdateDto appointmentUpdateDto){
         if (iAppointmentService.updateAppointmentService(appointmentUpdateDto)){
             return AjaxResult.success();
@@ -40,7 +40,7 @@ public class AppointmentController {
         }
     }
 
-//    @GetMapping("/list_appointment")
+//    @GetMapping("/appointment/list")
 //    public AjaxResult listAppointment(@RequestParam (value = "page") Integer page,
 //                                      @RequestParam(value = "page-size") Integer pageSize,
 //                                      @RequestParam(value = "roomId",required = false, defaultValue = "") Integer roomId,
@@ -54,7 +54,7 @@ public class AppointmentController {
 //                userId, month, year, date));
 //    }
 
-    @GetMapping("/detail-appointments")
+    @GetMapping("/appointments/detail")
     public  AjaxResult detailAppointment(@RequestParam(value = "id") Integer id){
         if(iAppointmentService.appointmentDecision(id)){
             return AjaxResult.success(iAppointmentService.detailAppointment(id));

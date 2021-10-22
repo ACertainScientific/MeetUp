@@ -96,10 +96,12 @@ public class UserService extends ServiceImpl<UserMapper, UserModel> implements I
             return loginInfo;
         }
 
-        if(DigestUtils.md5DigestAsHex(userAddDto.getPassword().getBytes(StandardCharsets.UTF_8)).equals(userModel.getPassword())){
+        if(DigestUtils.md5DigestAsHex(userAddDto.getPassword().getBytes(StandardCharsets.UTF_8)).equals(userModel.getPassword())
+            && userAddDto.getType().equals(userModel.getType())){
             loginInfo.setCode(0);
             Map<String,String> token= new HashMap<>();
             token.put("userName",userModel.getUserName());
+            token.put("type",userModel.getType().toString());
             loginInfo.setToken(token);
             return loginInfo;
         }else{
