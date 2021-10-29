@@ -10,4 +10,5 @@ public class DetailRoomDto {
     private String name;
     private Integer floor;
     private Integer buildingId;
+    private String buildingName;
 }

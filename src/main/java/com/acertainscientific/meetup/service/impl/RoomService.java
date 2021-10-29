@@ -100,7 +100,7 @@ public class RoomService extends ServiceImpl<RoomMapper, RoomModel> implements I
         detailRoomDto.setName(roomModel.getRoomName());
         detailRoomDto.setBuildingId(roomModel.getBuildingId());
         detailRoomDto.setFloor(roomModel.getFloor());
-
+        detailRoomDto.setBuildingName(buildingService.getById(roomModel.getBuildingId()).getName());
         redisUtil.set("Room:"+roomModel.getId().toString(), detailRoomDto);
         return detailRoomDto;
     }
