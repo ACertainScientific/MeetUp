@@ -1,9 +1,6 @@
 package com.acertainscientific.meetup.service.impl;
 
-import com.acertainscientific.meetup.dto.AppointmentAddDto;
-import com.acertainscientific.meetup.dto.AppointmentUpdateDto;
-import com.acertainscientific.meetup.dto.DetailAppointmentDto;
-import com.acertainscientific.meetup.dto.PageResponseDto;
+import com.acertainscientific.meetup.dto.*;
 import com.acertainscientific.meetup.mapper.AppointmentMapper;
 import com.acertainscientific.meetup.mapper.RoomMapper;
 import com.acertainscientific.meetup.model.AppointmentModel;
@@ -11,13 +8,16 @@ import com.acertainscientific.meetup.service.IAppointmentService;
 import com.acertainscientific.meetup.util.RedisUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.List;
 
 @Service
 public class AppointmentService extends ServiceImpl<AppointmentMapper, AppointmentModel> implements IAppointmentService {
@@ -44,7 +44,7 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
         Integer current_second = (now_hour * 60 * 60) + (now_minute * 60) + now_second;
 
         Integer max_second = (24 * 60 * 60);
-        if (startTime >= endTime) return false;
+        if (startTime >= endTime) {return false;}
 
         if (startTime >= max_second || endTime >= max_second) return false;
 
@@ -180,6 +180,22 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
         detailAppointmentDto.setYear(appointmentModel.getYear());
         redisUtil.set("Appointment:"+id, detailAppointmentDto);
         return detailAppointmentDto;
+    }
+
+    @Override
+    public PageResponseDto listAppointment(Integer page, Integer pageSize, Integer roomId, Integer startTime, Integer endTime,
+                                    String userId,Integer month, Integer year,Integer date){
+        PageHelper.startPage(page,pageSize);
+        List<AppointmentModel> list = appointmentMapper.listAppointment(roomId,startTime,endTime,userId,month,year,date);
+        PageInfo pageInfo = new PageInfo(list);
+        List<AppointmentListDto> listDtos = modelMapper.map(list, new TypeToken<List<AppointmentListDto>>(){}.getType());
+        PageResponseDto pageResponseDto= new PageResponseDto();
+        pageResponseDto.setList(listDtos);
+        pageResponseDto.setTotalCount((int) pageInfo.getTotal());
+        pageResponseDto.setPageCount(pageInfo.getPages());
+        pageResponseDto.setPerPage(pageInfo.getPageSize());
+        pageResponseDto.setCurrentPage(pageInfo.getPageNum());
+        return pageResponseDto;
     }
 
 

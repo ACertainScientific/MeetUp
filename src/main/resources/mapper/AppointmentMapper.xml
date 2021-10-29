@@ -40,4 +40,23 @@
         #{startTime} BETWEEN start_time AND  end_time or
         #{endTime} BETWEEN start_time AND end_time)
     </select>
+
+    <select id="listAppointment" resultType = "com.acertainscientific.meetup.model.AppointmentModel">
+        SELECT * FROM appointment WHERE
+        is_deleted = 0 AND
+        room_id = #{roomId} AND
+        <if test="startTime!= null and startTime != ''">
+            start_time <![CDATA[ >=  ]]> #{startTime} AND
+        </if>
+        <if test="endTime != null and endTime != ''">
+            end_time <![CDATA[ <=  ]]> #{endTime} AND
+        </if>
+        <if test="userId != null and userId != ''">
+            user_id = #{userId} AND
+        </if>
+        year = #{year} AND
+        month = #{month} AND
+        date = #{date}
+
+    </select>
 </mapper>

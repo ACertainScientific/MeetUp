@@ -40,19 +40,19 @@ public class AppointmentController {
         }
     }
 
-//    @GetMapping("/appointment/list")
-//    public AjaxResult listAppointment(@RequestParam (value = "page") Integer page,
-//                                      @RequestParam(value = "page-size") Integer pageSize,
-//                                      @RequestParam(value = "roomId",required = false, defaultValue = "") Integer roomId,
-//                                      @RequestParam(value = "startTime", required = false, defaultValue = "") Integer startTime,
-//                                      @RequestParam(value = "endTime", required = false, defaultValue = "") Integer endTime,
-//                                      @RequestParam(value = "userId", required = false, defaultValue = "") String userId,
-//                                      @RequestParam(value = "month", required = false, defaultValue = "") Integer month,
-//                                      @RequestParam(value = "year", required = false, defaultValue = "") Integer year,
-//                                      @RequestParam(value = "date", required = false, defaultValue = "") Integer date){
-//        return AjaxResult.success(iAppointmentService.listAppointment(page, pageSize, roomId, startTime, endTime,
-//                userId, month, year, date));
-//    }
+    @GetMapping("/appointment/list")
+    public AjaxResult listAppointment(@RequestParam (value = "page") Integer page,
+                                      @RequestParam(value = "page-size") Integer pageSize,
+                                      @RequestParam(value = "room-id",required = false, defaultValue = "") Integer roomId,
+                                      @RequestParam(value = "start-time", required = false, defaultValue = "") Integer startTime,
+                                      @RequestParam(value = "end-time", required = false, defaultValue = "") Integer endTime,
+                                      @RequestParam(value = "user-id", required = false, defaultValue = "") String userId,
+                                      @RequestParam(value = "month", required = false, defaultValue = "") Integer month,
+                                      @RequestParam(value = "year", required = false, defaultValue = "") Integer year,
+                                      @RequestParam(value = "date", required = false, defaultValue = "") Integer date){
+        return AjaxResult.success(iAppointmentService.listAppointment(page, pageSize, roomId, startTime, endTime,
+                userId, month, year, date));
+    }
 
     @GetMapping("/appointment/detail")
     public  AjaxResult detailAppointment(@RequestParam(value = "id") Integer id){
