@@ -29,33 +29,33 @@ class MeetUpApplicationTests {
 
 	@Test
 	void redis() {
-		UserModel a= new UserModel();
-		a.setId(1);
-		a.setPassword("1");
-		a.setCreatedAt(1);
-		a.setDeletedAt(1);
-		a.setIsDeleted(1);
-		a.setEmail("aa");
-		a.setUserName("a");
-		redisUtil.set("User:"+a.getId().toString(),a);
-		UserModel b=modelMapper.map(redisUtil.get("User:1"),UserModel.class);
-		log.info(b.toString());
+//		UserModel a= new UserModel();
+//		a.setId(1);
+//		a.setPassword("1");
+//		a.setCreatedAt(1);
+//		a.setDeletedAt(1);
+//		a.setIsDeleted(1);
+//		a.setEmail("aa");
+//		a.setUserName("a");
+//		redisUtil.set("User:"+a.getId().toString(),a);
+//		UserModel b=modelMapper.map(redisUtil.get("User:1"),UserModel.class);
+//		log.info(b.toString());
 	}
 	@Test
 	void building(){
-		BuildingModel a = new BuildingModel();
-		a.setId(1);
-		a.setCreatedAt(1);
-		a.setUpdatedAt(1);
-		a.setIsDeleted(0);
-		a.setFloorEnd(10);
-		a.setFloorStart(6);
-		a.setName("dcc");
-		a.setDeletedAt(1);
-		redisUtil.set("Building:"+a.getId().toString(), a);
-		UserModel b=modelMapper.map(redisUtil.get("Building:1"),UserModel.class);
-		log.info(b.toString());
-		buildingService.deleteBuilding(1);
+//		BuildingModel a = new BuildingModel();
+//		a.setId(1);
+//		a.setCreatedAt(1);
+//		a.setUpdatedAt(1);
+//		a.setIsDeleted(0);
+//		a.setFloorEnd(10);
+//		a.setFloorStart(6);
+//		a.setName("dcc");
+//		a.setDeletedAt(1);
+//		redisUtil.set("Building:"+a.getId().toString(), a);
+//		UserModel b=modelMapper.map(redisUtil.get("Building:1"),UserModel.class);
+//		log.info(b.toString());
+//		buildingService.deleteBuilding(1);
 	}
 
 
