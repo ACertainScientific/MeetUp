@@ -20,6 +20,7 @@ public class UserController {
     IUserService userService;
 
     @GetMapping("/list-user")
+    @ApiOperation(value = "list-user", notes = "return the list of all users")
     public AjaxResult listUser(@RequestParam(value = "page") Integer page,
                                @RequestParam(value = "page-size") Integer pageSize,
                                @RequestParam(value = "name" ,required = false, defaultValue = "") String name){
@@ -33,6 +34,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete-user")
+    @ApiOperation(httpMethod = "DELETE",value = "delete user", notes = "Delete the certain user with given ID, return error if the user does not exist")
     public AjaxResult deleteUser(@RequestParam Integer id){
         if(userService.deleteUser(id)){
             return AjaxResult.success();
