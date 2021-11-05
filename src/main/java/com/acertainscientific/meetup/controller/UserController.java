@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @RestController
-@Api
+@Api(tags = "User")
 public class UserController {
     @Autowired
     IUserService userService;

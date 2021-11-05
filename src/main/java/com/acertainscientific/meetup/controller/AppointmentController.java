@@ -4,10 +4,12 @@ import com.acertainscientific.meetup.common.AjaxResult;
 import com.acertainscientific.meetup.dto.AppointmentAddDto;
 import com.acertainscientific.meetup.dto.AppointmentUpdateDto;
 import com.acertainscientific.meetup.service.IAppointmentService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Api(tags = "Appointment")
 public class AppointmentController {
 
     @Autowired
