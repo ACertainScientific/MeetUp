@@ -182,7 +182,7 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
         return detailAppointmentDto;
     }
 
-    //* return all the appointment from the table
+    // return all the appointment from the table
     @Override
     public PageResponseDto listAppointment(Integer page, Integer pageSize, Integer roomId, Integer startTime, Integer endTime,
                                     String userId,Integer month, Integer year,Integer date){

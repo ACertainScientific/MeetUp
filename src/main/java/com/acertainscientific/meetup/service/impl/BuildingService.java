@@ -91,7 +91,7 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
     }
 
 
-    //* help function: check if the database already contains the building.
+    // help function: check if the database already contains the building.
     @Override
     public boolean dbDecision(Integer id){
         if (redisUtil.hasKey("Building:" + id)){
@@ -101,7 +101,7 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
         return buildingModel != null && buildingModel.getIsDeleted() != 1;
     }
 
-    //* return all the building attributes based on the unique id(all for a row)
+    // return all the building attributes based on the unique id(all for a row)
     @Override
     public DetailBuildingDto detailBuilding(Integer id){
         if (redisUtil.hasKey("Building:" + id)){
