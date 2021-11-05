@@ -154,6 +154,7 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
 //
 //    }
 
+    // check if the appointment is valid to operate. If the appointment is deleted or NUll, no operation can be done.
     @Override
     public boolean appointmentDecision(Integer id){
         if (redisUtil.hasKey("Appointment:" + id)) return true;
