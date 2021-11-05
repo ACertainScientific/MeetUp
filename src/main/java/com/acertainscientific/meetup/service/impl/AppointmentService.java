@@ -163,7 +163,7 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
         }
         return false;
     }
-
+    //* return all the appointment attributes based on the unique id(all for a row)
     @Override
     public DetailAppointmentDto detailAppointment(Integer id){
         if (redisUtil.hasKey("Appointment:" + id)){
@@ -182,6 +182,7 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
         return detailAppointmentDto;
     }
 
+    //* return all the appointment from the table
     @Override
     public PageResponseDto listAppointment(Integer page, Integer pageSize, Integer roomId, Integer startTime, Integer endTime,
                                     String userId,Integer month, Integer year,Integer date){
