@@ -7,10 +7,12 @@ import com.acertainscientific.meetup.dto.RoomAddDto;
 import com.acertainscientific.meetup.dto.RoomUpdateDto;
 import com.acertainscientific.meetup.model.RoomModel;
 import com.acertainscientific.meetup.service.IRoomService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Api(tags = "Room")
 public class RoomController {
     @Autowired
     IRoomService roomService;

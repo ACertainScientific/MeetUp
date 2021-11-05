@@ -154,6 +154,7 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
 //
 //    }
 
+    // check if the appointment is valid to operate. If the appointment is deleted or NUll, no operation can be done.
     @Override
     public boolean appointmentDecision(Integer id){
         if (redisUtil.hasKey("Appointment:" + id)) return true;
@@ -163,7 +164,7 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
         }
         return false;
     }
-
+    //* return all the appointment attributes based on the unique id(all for a row)
     @Override
     public DetailAppointmentDto detailAppointment(Integer id){
         if (redisUtil.hasKey("Appointment:" + id)){
@@ -182,6 +183,7 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
         return detailAppointmentDto;
     }
 
+    // return all the appointment from the table
     @Override
     public PageResponseDto listAppointment(Integer page, Integer pageSize, Integer roomId, Integer startTime, Integer endTime,
                                     String userId,Integer month, Integer year,Integer date){
