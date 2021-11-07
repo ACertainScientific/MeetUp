@@ -6,6 +6,7 @@ import com.acertainscientific.meetup.dto.BuildingAddDto;
 import com.acertainscientific.meetup.dto.BuildingUpdateDto;
 import com.acertainscientific.meetup.model.BuildingModel;
 import com.acertainscientific.meetup.service.IBuildingService;
+import com.acertainscientific.meetup.util.QrCodeUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -13,6 +14,10 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
 
 @RestController
 @Api(tags = "Building")
@@ -55,6 +60,18 @@ public class BuildingController {
         }
         return AjaxResult.error();
     }
+
+//    //生成不带logo的二维码到response, 测试，还有点问题
+//    @RequestMapping("/qrnologo")
+//    public void qrnologo(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "id") Integer id) {
+//        String requestUrl = "localhost:8089/building/detail/" + id;
+//        try {
+//            OutputStream os = response.getOutputStream();
+//            QrCodeUtil.encode(requestUrl, null, os);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @GetMapping("/building/list/all")
     public AjaxResult listAllBuildings(@RequestParam(value = "name",required = false, defaultValue = "") String name){
