@@ -44,6 +44,7 @@ public class WebConfig implements WebMvcConfigurer {
         config.setAllowCredentials(true);
         // 设置访问源地址
         config.addAllowedOrigin("http://localhost:19006");
+        config.addAllowedOriginPattern("*");
         // 设置访问源请求头
         config.addAllowedHeader("*");
         // 设置访问源请求方法
