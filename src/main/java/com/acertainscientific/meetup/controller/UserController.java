@@ -50,9 +50,11 @@ public class UserController {
             httpServletResponse.setHeader("X-Authorization", JavaWebToken.createJavaWebToken(loginInfo.getToken()));
         }
         //httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
-        httpServletResponse.addHeader("Access-Control-Allow-Headers", "*");
-        httpServletResponse.addHeader("Access-Control-Allow-Methods", "*");
-        return AjaxResult.success(loginInfo.getCode());
+//        httpServletResponse.addHeader("Access-Control-Allow-Headers", "*");
+//        httpServletResponse.addHeader("Access-Control-Allow-Methods", "*");
+        loginInfo.setAuth(JavaWebToken.createJavaWebToken(loginInfo.getToken()));
+        loginInfo.setToken(null);
+        return AjaxResult.success(loginInfo);
     }
 
 }

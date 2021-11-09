@@ -9,4 +9,5 @@ import java.util.Map;
 public class LoginInfo {
     private Integer code;
     private Map token;
+    private String auth;
 }
