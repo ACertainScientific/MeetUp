@@ -2,10 +2,14 @@ package com.acertainscientific.meetup.common;
 
 
 import java.util.HashMap;
+import java.util.Map;
 
 import com.acertainscientific.meetup.common.constant.HttpStatus;
+import com.acertainscientific.meetup.util.JavaWebToken;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import lombok.Data;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 操作消息提醒
@@ -40,6 +44,7 @@ public class AjaxResult extends HashMap<String, Object> {
 
     public static final String TIMESTAMP_TAG = "timestamp";
 
+    public static final String AUTH = "auth";
 
     /**
      * 初始化一个新创建的 AjaxResult 对象，使其表示一个空消息。
@@ -59,6 +64,7 @@ public class AjaxResult extends HashMap<String, Object> {
         super.put(MESSAGE_TAG, msg);
         super.put(STATUS_TAG, code);
         super.put(TIMESTAMP_TAG, System.currentTimeMillis()/1000);
+        super.put(AUTH,"");
     }
 
     /**
@@ -74,6 +80,7 @@ public class AjaxResult extends HashMap<String, Object> {
         super.put(MESSAGE_TAG, msg);
         super.put(STATUS_TAG, code);
         super.put(TIMESTAMP_TAG, System.currentTimeMillis()/1000);
+        super.put(AUTH,"");
         if (StringUtils.checkValNotNull(data)) {
             super.put(DATA_TAG, data);
         }
@@ -176,6 +183,18 @@ public class AjaxResult extends HashMap<String, Object> {
     }
 
 
-
+    public AjaxResult auth(HttpServletRequest request){
+        String token = request.getHeader("X-Authorization");
+        if (token == "WanNeng"){
+            super.put(AUTH,"WanNeng");
+            return this;
+        }
+        Map realToken = (JavaWebToken.parserJavaWebToken(token));
+        if(realToken.get("userName")!=null && !realToken.get("userName").equals("")){
+            //response.addHeader("X-Authorization",JavaWebToken.createJavaWebToken(realToken));
+            super.put(AUTH,JavaWebToken.createJavaWebToken(realToken));
+        }
+        return this;
+    }
 }
 

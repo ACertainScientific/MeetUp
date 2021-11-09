@@ -28,38 +28,38 @@ public class BuildingController {
     IBuildingService buildingService;
 
     @PostMapping("/building/add")
-    public AjaxResult addBuilding(@RequestBody BuildingAddDto buildingAddDto){
+    public AjaxResult addBuilding(@RequestBody BuildingAddDto buildingAddDto, HttpServletRequest request){
         buildingService.addBuilding(buildingAddDto);
-        return AjaxResult.success();
+        return AjaxResult.success().auth(request);
     }
 
     @DeleteMapping("/building/delete")
-    public AjaxResult deleteBuilding(@RequestParam Integer id){
+    public AjaxResult deleteBuilding(@RequestParam Integer id, HttpServletRequest request){
         if (buildingService.deleteBuilding(id)){
-            return AjaxResult.success();
+            return AjaxResult.success().auth(request);
         }
-        return AjaxResult.error();
+        return AjaxResult.error().auth(request);
     }
     @PostMapping("/building/update")
-    public AjaxResult updateBuilding(@RequestBody BuildingUpdateDto buildingUpdateDto){
+    public AjaxResult updateBuilding(@RequestBody BuildingUpdateDto buildingUpdateDto, HttpServletRequest request){
         if(buildingService.updateBuilding(buildingUpdateDto)){
-            return AjaxResult.success();
+            return AjaxResult.success().auth(request);
         }
-        return AjaxResult.error();
+        return AjaxResult.error().auth(request);
     }
 
     @GetMapping("/building/list")
     public AjaxResult listBuilding(@RequestParam(value = "page") Integer page,
                                    @RequestParam(value = "page-size") Integer pageSize,
-                                   @RequestParam(value = "name",required = false, defaultValue = "") String name){
-        return AjaxResult.success(buildingService.listBuilding(page,pageSize,name));
+                                   @RequestParam(value = "name",required = false, defaultValue = "") String name, HttpServletRequest request){
+        return AjaxResult.success(buildingService.listBuilding(page,pageSize,name)).auth(request);
     }
     @GetMapping("/building/detail")
-    public AjaxResult detailBuilding(@RequestParam(value = "id") Integer id){
+    public AjaxResult detailBuilding(@RequestParam(value = "id") Integer id, HttpServletRequest request){
         if (buildingService.dbDecision(id)){
-            return AjaxResult.success(buildingService.detailBuilding(id));
+            return AjaxResult.success(buildingService.detailBuilding(id)).auth(request);
         }
-        return AjaxResult.error();
+        return AjaxResult.error().auth(request);
     }
 
 
@@ -76,7 +76,7 @@ public class BuildingController {
     }
 
     @GetMapping("/building/list/all")
-    public AjaxResult listAllBuildings(@RequestParam(value = "name",required = false, defaultValue = "") String name){
-        return AjaxResult.success(buildingService.listAllBuildings(name));
+    public AjaxResult listAllBuildings(@RequestParam(value = "name",required = false, defaultValue = "") String name, HttpServletRequest request){
+        return AjaxResult.success(buildingService.listAllBuildings(name)).auth(request);
     }
 }
