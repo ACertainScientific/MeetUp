@@ -4,6 +4,7 @@ package com.acertainscientific.meetup.controller;
 import com.acertainscientific.meetup.common.AjaxResult;
 import com.acertainscientific.meetup.dto.BuildingAddDto;
 import com.acertainscientific.meetup.dto.BuildingUpdateDto;
+import com.acertainscientific.meetup.dto.UrlDto;
 import com.acertainscientific.meetup.model.BuildingModel;
 import com.acertainscientific.meetup.service.IBuildingService;
 import com.acertainscientific.meetup.util.QrCodeUtil;
@@ -61,17 +62,18 @@ public class BuildingController {
         return AjaxResult.error();
     }
 
-//    //生成不带logo的二维码到response, 测试，还有点问题
-//    @RequestMapping("/qrnologo")
-//    public void qrnologo(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "id") Integer id) {
-//        String requestUrl = "localhost:8089/building/detail/" + id;
-//        try {
-//            OutputStream os = response.getOutputStream();
-//            QrCodeUtil.encode(requestUrl, null, os);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+
+    @RequestMapping("/qrnologo")
+    @ApiOperation(value = "qrcode", notes = "Generate qrcode by given website")
+    public void qrnologo(HttpServletRequest request, HttpServletResponse response, @RequestBody UrlDto urlDto) {
+        String requestUrl = urlDto.getUrl();
+        try {
+            OutputStream os = response.getOutputStream();
+            QrCodeUtil.encode(requestUrl, null, os);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @GetMapping("/building/list/all")
     public AjaxResult listAllBuildings(@RequestParam(value = "name",required = false, defaultValue = "") String name){
