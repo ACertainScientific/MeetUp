@@ -49,6 +49,9 @@ public class UserController {
         if(loginInfo.getCode() ==0){
             httpServletResponse.setHeader("X-Authorization", JavaWebToken.createJavaWebToken(loginInfo.getToken()));
         }
+        httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
+        httpServletResponse.addHeader("Access-Control-Allow-Headers", "*");
+        httpServletResponse.addHeader("Access-Control-Allow-Methods", "*");
         return AjaxResult.success(loginInfo.getCode());
     }
 

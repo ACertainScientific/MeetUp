@@ -34,6 +34,8 @@ public class HttpResponseInterceptorHandler implements HandlerInterceptor {
         if(realToken.get("userName")!=null && !realToken.get("userName").equals("")){
             response.addHeader("X-Authorization",JavaWebToken.createJavaWebToken(realToken));
         }
+
+
         return true;
     }
 
