@@ -83,6 +83,8 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
 
     }
 
+    // return all the buildings contained in the table. return all the building back to front-end through
+    //buildinglistDTO
     @Override
     public List<BuildingListDto> listAllBuildings(String name){
         List<BuildingModel> buildingModels = buildingMapper.listBuilding(name);
