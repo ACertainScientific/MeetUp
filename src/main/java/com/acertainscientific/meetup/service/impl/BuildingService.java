@@ -67,6 +67,8 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
         return false;
     }
 
+    // return all the building with assigned page size and page number
+    // building page return through the pageResponseDTO
     @Override
     public PageResponseDto listBuilding(Integer page, Integer pageSize, String name){
         PageHelper.startPage(page,pageSize);
