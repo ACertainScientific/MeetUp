@@ -52,6 +52,8 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
 
     }
 
+    // added redis part: update the redis with the new id if the building model is not deleted, existed and available.
+    //else delete the row from redis
     @Override
     public boolean updateBuilding(BuildingUpdateDto buildingUpdateDto){
         BuildingModel buildingModel = modelMapper.map(buildingUpdateDto, BuildingModel.class);
