@@ -34,6 +34,7 @@ public class BuildingService extends ServiceImpl<BuildingMapper, BuildingModel> 
         this.save(buildingModel);
     }
 
+    // added delete building row from redis by id
     @Override
     public boolean deleteBuilding(Integer id){
         BuildingModel buildingModel = this.getById(id);
