@@ -51,11 +51,15 @@ public class AppointmentController {
                                       @RequestParam(value = "start-time", required = false, defaultValue = "") Integer startTime,
                                       @RequestParam(value = "end-time", required = false, defaultValue = "") Integer endTime,
                                       @RequestParam(value = "user-id", required = false, defaultValue = "") String userId,
-                                      @RequestParam(value = "month", required = false, defaultValue = "") Integer month,
-                                      @RequestParam(value = "year", required = false, defaultValue = "") Integer year,
-                                      @RequestParam(value = "date", required = false, defaultValue = "") Integer date, HttpServletRequest request){
+                                      @RequestParam(value = "from-month", defaultValue = "") Integer fromMonth,
+                                      @RequestParam(value = "from-year", defaultValue = "") Integer fromYear,
+                                      @RequestParam(value = "from-date", defaultValue = "") Integer fromDate,
+                                      @RequestParam(value = "to-month", defaultValue = "") Integer toMonth,
+                                      @RequestParam(value = "to-year", defaultValue = "") Integer toYear,
+                                      @RequestParam(value = "to-date", defaultValue = "") Integer toDate,
+                                      HttpServletRequest request){
         return AjaxResult.success(iAppointmentService.listAppointment(page, pageSize, roomId, startTime, endTime,
-                userId, month, year, date)).auth(request);
+                userId, fromMonth, fromYear, fromDate, toMonth, toYear, toDate)).auth(request);
     }
 
     @GetMapping("/appointment/detail")

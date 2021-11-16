@@ -23,5 +23,5 @@ public interface IAppointmentService extends IService<AppointmentModel> {
     boolean updateAppointmentService(AppointmentUpdateDto appointmentUpdateDto);
 
     PageResponseDto listAppointment(Integer page, Integer pageSize, Integer roomId, Integer startTime, Integer endTime,
-                    String userId,Integer month, Integer year,Integer date);
+                    String userId,Integer fromMonth, Integer fromYear,Integer fromDate, Integer toMonth, Integer toYear, Integer toDate);
 }

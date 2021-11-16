@@ -50,22 +50,7 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
 
         if (startTime < 0 ) return false;
 
-        if (month < 1 || month > 12) return false;
-        if (date < 1) return false;
-
-        if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12){
-            if (date > 31) return false;
-        }else{
-            if (month == 2){
-                if (now_year % 4 == 0){
-                    if (date > 29) return false;
-                }else{
-                    if (date > 28) return false;
-                }
-            }else{
-                if (date > 30) return false;
-            }
-        }
+        if (ValidTimeHelper(date, month, now_year)) return false;
 
         if (now_year > year){
             return false;
@@ -87,6 +72,35 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
         return true;
 
 
+    }
+
+    public boolean isValidTimeForCertainDate(Integer date, Integer month, Integer year){
+
+        if (ValidTimeHelper(date, month, year)) return false;
+
+        return true;
+
+
+    }
+
+    private boolean ValidTimeHelper(Integer date, Integer month, Integer year) {
+        if (month < 1 || month > 12) return true;
+        if (date < 1) return true;
+
+        if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12){
+            if (date > 31) return true;
+        }else{
+            if (month == 2){
+                if (year % 4 == 0){
+                    if (date > 29) return true;
+                }else{
+                    if (date > 28) return true;
+                }
+            }else{
+                if (date > 30) return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -186,9 +200,12 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
     // return all the appointment from the table
     @Override
     public PageResponseDto listAppointment(Integer page, Integer pageSize, Integer roomId, Integer startTime, Integer endTime,
-                                    String userId,Integer month, Integer year,Integer date){
+                                    String userId,Integer fromMonth, Integer fromYear,Integer fromDate,
+                                           Integer toMonth, Integer toYear, Integer toDate){
+        if (!isValidTimeForCertainDate(fromDate, fromMonth, fromYear) || !isValidTimeForCertainDate(toDate, toMonth, toYear))
         PageHelper.startPage(page,pageSize);
-        List<AppointmentModel> list = appointmentMapper.listAppointment(roomId,startTime,endTime,userId,month,year,date);
+        List<AppointmentModel> list = appointmentMapper.listAppointment(roomId,startTime,endTime,userId,fromMonth,fromYear,fromDate,
+                toMonth, toYear, toDate);
         PageInfo pageInfo = new PageInfo(list);
         List<AppointmentListDto> listDtos = modelMapper.map(list, new TypeToken<List<AppointmentListDto>>(){}.getType());
         PageResponseDto pageResponseDto= new PageResponseDto();
