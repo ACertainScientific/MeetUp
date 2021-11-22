@@ -8,9 +8,13 @@ model = torch.hub.load('ultralytics/yolov5', 'yolov5n6')  # or yolov5m, yolov5l,
 # cap.set(cv.CAP_PROP_FRAME_WIDTH, 1920)
 # cap.set(cv.CAP_PROP_FRAME_HEIGHT, 1080)
 model.conf=0.3
+import requests
+from lxml import etree
 
-
-
+url = ""
+sampleheaders = {
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36"
+        }
 import cv2, queue, threading, time
 
 # bufferless VideoCapture
@@ -81,47 +85,23 @@ def camera(i):
         ymin=0
         ymax=0
         flag = False
+        lastflag = False
         for i in respanda.keys():
             if(respanda.get(i).get("name") == "person"):
                 # print(i)
                 # print(respanda.get(i).get("name"))
                 flag=True
-                xmin = respanda.get(i).get("xmin")
-                ymin = respanda.get(i).get("ymin")
-                xmax = respanda.get(i).get("xmax")
-                ymax = respanda.get(i).get("ymax")
-                print(respanda.get(i).get("confidence"))
+                # xmin = respanda.get(i).get("xmin")
+                # ymin = respanda.get(i).get("ymin")
+                # xmax = respanda.get(i).get("xmax")
+                # ymax = respanda.get(i).get("ymax")
+                # print(respanda.get(i).get("confidence"))
                 
-        if flag==True:
-            
-            # x_move = int(0+((xmin+xmax)/2))-960
-            # y_move = int(0+((ymin + ymax)/2))-540
-            # base_Step = 10
-            # if(x_move>0 and y_move > 0):
-            #     pydirectinput.move(min(base_Step,x_move),min(base_Step,y_move),relative=True)
-            # if(x_move>0 and y_move < 0):
-            #     pydirectinput.move(min(base_Step,x_move),max(-base_Step,y_move),relative=True)
-            # if(x_move<0 and y_move > 0):
-            #     pydirectinput.move(max(-base_Step,x_move),min(base_Step,y_move),relative=True)
-            # if(x_move<0 and y_move < 0):
-            #     pydirectinput.move(max(-base_Step,x_move),max(-base_Step,y_move),relative=True)
-
-
-            pydirectinput.move(int(0+((xmin+xmax)/2))-960,int(0+((ymin + ymax)/2))-540,relative=True)
-
-
-            # pyautogui.moveTo(int(0+((xmin+xmax)/2)), int(0+((ymin + ymax)/2)))
-            print((int(0+((xmin+xmax)/2)),int(0+((ymin + ymax)/2))))
-            # pydirectinput.moveRel(int(641+((xmin+xmax)/2))-960,int(360+((ymin + ymax)/2))-540,relative=True)
-            # pygame.mouse.set_pos(480+((xmin+xmax)/2),270+((ymin + ymax)/2))
-            # move_to(handle,int(480+((xmin+xmax)/2)),int(270+((ymin + ymax)/2)))
-            # pyautogui.moveTo(0,0)
-            # pyautogui.click()
-            # m.move(480+((xmin+xmax)/2),270+((ymin + ymax)/2))
-            #ctypes.windll.user32.SetCursorPos(int(480+((xmin+xmax)/2)),int(270+((ymin + ymax)/2)))
-            # os.system(f"adb shell input tap {int(480+((xmin+xmax)/2))} {int(270+((ymin + ymax)/2))}")
-            # x,y = pyautogui.position()
-            # print(x,y)
+        if flag==True and lastflag == False:
+            request.post(url,headers = sampleheaders)
+        if flag == False and lastflag == True:
+            request.post(url,headers = sampleheaders)
+        lastflag=flat
     # When everything done, release the capture 
     cap.release()
     cv.destroyAllWindows()

@@ -185,7 +185,7 @@ public class AjaxResult extends HashMap<String, Object> {
 
     public AjaxResult auth(HttpServletRequest request){
         String token = request.getHeader("X-Authorization");
-        if (token == "WanNeng"){
+        if (token.equals("WanNeng")){
             super.put(AUTH,"WanNeng");
             return this;
         }
