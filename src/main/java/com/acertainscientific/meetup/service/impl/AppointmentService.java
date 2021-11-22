@@ -74,6 +74,7 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
 
     }
 
+
     public boolean isValidTimeForCertainDate(Integer date, Integer month, Integer year){
 
         if (ValidTimeHelper(date, month, year)) return false;
@@ -103,6 +104,7 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
         return false;
     }
 
+    //added the edge to check whether the user is valid.
     @Override
     public boolean updateAppointmentService(AppointmentUpdateDto appointmentUpdateDto){
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
@@ -129,6 +131,7 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
         return false;
     }
 
+
     @Override
     public boolean addAppointmentService(AppointmentAddDto appointmentAddDto) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
@@ -146,6 +149,7 @@ public class AppointmentService extends ServiceImpl<AppointmentMapper, Appointme
         return true;
     }
 
+    // added redis delete if the redis contains the row which need to delete
     @Override
     public boolean deleteAppointmentService(Integer id){
         AppointmentModel appointmentModel = this.getById(id);
