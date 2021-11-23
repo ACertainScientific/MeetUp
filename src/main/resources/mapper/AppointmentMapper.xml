@@ -54,9 +54,9 @@
         <if test="userId != null and userId != ''">
             user_id = #{userId} AND
         </if>
-        year BETWEEN #{fromYear} AND #{toYear} AND
-        month BETWEEN #{fromMonth} AND #{toMonth} AND
-        date BETWEEN #{fromDate} AND #{toDate}
+       ((year * 400) + (month * 30) + (date))
+       BETWEEN ( (#{fromYear} * 400) + (#{fromMonth} * 30) + #{fromDate}) AND
+       ((#{toYear} * 400) + (#{toMonth} * 30) + #{toDate})
 
     </select>
 </mapper>
